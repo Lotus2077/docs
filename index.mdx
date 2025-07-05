@@ -1,71 +1,376 @@
 ---
-title: Introduction
-description: "Welcome to the home of your new documentation"
+title: "Introduction"
+description: "Welcome to the RM-01 AI Supercomputer Documentation - your comprehensive guide to deploying and managing enterprise AI solutions"
 ---
 
-<img
-  className="block dark:hidden"
-  src="/images/hero-light.png"
-  alt="Hero Light"
-/>
-<img
-  className="hidden dark:block"
-  src="/images/hero-dark.png"
-  alt="Hero Dark"
-/>
+<iframe
+  width="560"
+  height="315"
+  src="https://youtu.be/qEKqEdGf9o8"
+  title="YouTube video player"
+  frameBorder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowFullScreen
+  style={{ width: '100%', borderRadius: '0.5rem' }}
+></iframe>
 
-## Setting up
+## What is RM-01?
 
-The first step to world-class documentation is setting up your editing environments.
+The RM-01 is a state-of-the-art portable AI supercomputer designed for private, on-premises deployment of large language models. Built for enterprise environments, it delivers powerful AI capabilities while maintaining complete data sovereignty and security.
 
-<CardGroup cols={2}>
-  <Card
-    title="Edit Your Docs"
-    icon="pen-to-square"
-    href="https://mintlify.com/docs/quickstart"
-  >
-    Get your docs set up locally for easy development
-  </Card>
-  <Card
-    title="Preview Changes"
-    icon="image"
-    href="https://mintlify.com/docs/development"
-  >
-    Preview your changes before you push to make sure they're perfect
-  </Card>
+### Key Capabilities
+
+<CardGroup cols={3}>
+<Card title="High-Performance Computing" icon="rocket">
+    Up to 1000 TOPS (FP8) computing power with 32/64/128GB GPU memory for efficient local AI inference
+</Card>
+<Card title="Enterprise Security" icon="shield">
+    Hardware-level encryption, secure key management, and zero-trust architecture to protect your data
+</Card>
+<Card title="Private Deployment" icon="lock">
+    Fully private, on-premises operation with no data leaving your device
+</Card>
 </CardGroup>
 
-## Make it yours
+## Getting Started
 
-Update your docs to your brand and add valuable content for the best user conversion.
+Choose your path based on your role and requirements:
 
 <CardGroup cols={2}>
-  <Card
-    title="Customize Style"
-    icon="palette"
-    href="https://mintlify.com/docs/settings/global"
-  >
-    Customize your docs to your company's colors and brands
-  </Card>
-  <Card
-    title="Reference APIs"
-    icon="code"
-    href="https://mintlify.com/docs/api-playground/openapi"
-  >
-    Automatically generate endpoints from an OpenAPI spec
-  </Card>
-  <Card
-    title="Add Components"
-    icon="screwdriver-wrench"
-    href="https://mintlify.com/docs/content/components/accordions"
-  >
-    Build interactive features and designs to guide your users
-  </Card>
-  <Card
-    title="Get Inspiration"
-    icon="stars"
-    href="https://mintlify.com/customers"
-  >
-    Check out our showcase of our favorite documentation
-  </Card>
+<Card title="Enterprise Quickstart" icon="play" href="quickstart">
+    **For Enterprise Users**
+    
+    Get started with your RM-01 device, including hardware setup, management interface access, and using AI applications.
+</Card>
+<Card title="System Architecture Guide" icon="sitemap" href="essentials/develop">
+    **For Developers**
+    
+    Technical guide for building applications on RM-01, covering system architecture, environment setup, and model integration.
+</Card>
+<Card title="Vendor Deployment Guide" icon="server" href="essentials/deploy">
+    **For Vendors & Service Providers**
+    
+    Complete deployment guide for implementing RM-01 in enterprise environments, including model preparation and system integration.
+</Card>
 </CardGroup>
+
+## Core Features
+
+### AI Model Support
+
+RM-01 supports a comprehensive range of AI models:
+
+<Tabs>
+<Tab title="Model Range">
+    **Supported Model Sizes:**
+    - 0.5B to 235B parameters (GPTQ Int4 quantization)
+    - Mainstream open-source models (DeepSeek, Qwen, Llama)
+    - Custom enterprise models
+    - Industry-specific AI applications
+</Tab>
+<Tab title="Performance">
+    **Inference Capabilities:**
+    - Real-time model switching
+    - Concurrent processing support
+    - Optimized memory management
+    - Hardware-accelerated inference
+</Tab>
+<Tab title="Deployment">
+    **Deployment Options:**
+    - Plug-and-play installation
+    - Zero-maintenance operation
+    - Offline-first architecture
+    - Enterprise integration ready
+</Tab>
+</Tabs>
+
+### Security & Privacy
+
+<Steps>
+<Step title="Data Sovereignty">
+    All data processing occurs locally on your device. No information is transmitted to external servers or cloud services.
+</Step>
+<Step title="Hardware Encryption">
+    Built-in hardware-level encryption ensures your data remains secure at all times, even during processing.
+</Step>
+<Step title="Access Control">
+    Enterprise-grade user authentication and authorization systems protect against unauthorized access.
+</Step>
+<Step title="Compliance Ready">
+    Meets industry standards for data protection and privacy regulations including GDPR, HIPAA, and SOC 2.
+</Step>
+</Steps>
+
+## Technical Specifications
+
+### Performance at a Glance
+
+<CardGroup cols={4}>
+<Card title="Computing Power" icon="microchip">
+    **1,000 TOPS**
+    
+    FP8 processing capability
+</Card>
+<Card title="GPU Memory" icon="memory">
+    **Up to 128GB**
+    
+    Unified high-bandwidth memory
+</Card>
+<Card title="Power Efficiency" icon="plug">
+    **98.6% Savings**
+    
+    vs traditional AI servers
+</Card>
+<Card title="Model Support" icon="brain">
+    **0.5B - 235B**
+    
+    Parameter range support
+</Card>
+</CardGroup>
+
+### Detailed Specifications
+
+<Tabs>
+<Tab title="Processing & Performance">
+**Core Processing Capabilities**
+
+- **AI Processing Power**: Up to 1,000 TOPS (FP8)
+- **Precision Support**: FP8, FP16, FP32
+- **Model Parameters**: 0.5B to 235B (GPTQ Int4 quantization)
+- **Inference Speed**: Real-time with hardware acceleration
+- **Concurrent Users**: Multiple simultaneous sessions supported
+- **Model Switching**: Hot-swappable with zero downtime
+- **Processing Latency**: Sub-second response times
+
+**Memory Architecture**
+
+- **GPU Memory Options**: 32GB / 64GB / 128GB configurations
+- **Memory Type**: Unified high-bandwidth memory architecture
+- **Memory Bandwidth**: Optimized for AI workload processing
+- **Cache System**: Multi-level intelligent caching
+- **Memory Management**: Intelligent resource allocation
+
+**Performance Optimization**
+
+- **Dynamic Batching**: Automatic request optimization
+- **Model Quantization**: Advanced GPTQ Int4 support
+- **Load Balancing**: Distributed processing capability
+- **Throughput**: Enterprise-grade processing capacity
+</Tab>
+
+<Tab title="Power & Efficiency">
+**Power Consumption Specifications**
+
+<Steps>
+<Step title="Maximum Power: 100W">
+    Peak performance operation with full AI processing capabilities engaged
+</Step>
+<Step title="Typical TDP: 60W">
+    Normal operation power consumption during standard workloads
+</Step>
+<Step title="Annual Operating Cost: $480">
+    Estimated electricity cost for 24/7 continuous operation
+</Step>
+</Steps>
+
+**Energy Efficiency Comparison**
+
+- **Traditional AI Server Power**: ~7,000W typical consumption
+- **RM-01 Power Consumption**: 100W maximum
+- **Energy Savings**: 98.6% reduction vs traditional infrastructure
+- **Carbon Footprint**: Significantly reduced environmental impact
+- **Cooling Requirements**: Fanless design, no additional cooling needed
+
+**Cost Benefits**
+
+- **Lower Initial Investment**: 80% savings compared to traditional setup
+- **Reduced Operational Costs**: 98% decrease in ongoing expenses
+- **3-Year TCO Savings**: 99% total cost of ownership reduction
+</Tab>
+
+<Tab title="Storage & Connectivity">
+**Storage Systems**
+
+- **Primary Storage**: CFexpress Type B cards for model storage
+- **System Storage**: MicroSD card support for operating system
+- **Storage Capacity**: Expandable model libraries with hot-swap capability
+- **Data Transfer**: High-speed model loading and switching
+- **Storage Security**: Hardware-level encryption for all data
+- **Backup Features**: Automatic configuration and model backup
+- **Version Management**: Model versioning and rollback support
+
+**Network & Connectivity**
+
+- **Network Interface**: USB-C to Ethernet adapter included
+- **Management Access**: Web-based management interface
+- **API Support**: RESTful API for system integration
+- **Protocols**: Standard enterprise networking protocols
+- **Security**: Enterprise-grade network security features
+
+**Enterprise Integration**
+
+- **Directory Services**: LDAP/Active Directory integration
+- **Authentication**: Single Sign-On (SSO) support
+- **Remote Access**: Secure VPN connectivity options
+- **Monitoring**: SNMP and custom metrics collection
+- **Compliance**: Enterprise security and audit requirements
+</Tab>
+
+<Tab title="Physical & Environmental">
+**Physical Design**
+
+<CardGroup cols={2}>
+<Card title="Form Factor" icon="cube">
+    Portable desktop design optimized for enterprise environments
+</Card>
+<Card title="Cooling System" icon="snowflake">
+    Advanced fanless cooling for silent operation
+</Card>
+<Card title="Build Quality" icon="hammer">
+    Rugged construction for reliable operation
+</Card>
+<Card title="Connectivity" icon="usb">
+    USB-C ports for power and network connectivity
+</Card>
+</CardGroup>
+
+**Environmental Specifications**
+
+- **Operating Temperature**: -20°C to 60°C (-4°F to 140°F)
+- **Storage Temperature**: -20°C to 60°C (-4°F to 140°F)
+- **Operating Altitude**: Up to 5,000 meters above sea level
+- **Certifications**: Meets enterprise environmental standards
+
+**Deployment Considerations**
+
+- **Installation**: Simple plug-and-play setup
+- **Maintenance**: Zero-maintenance operation design
+- **Portability**: Lightweight for easy relocation
+- **Security**: Physical security features for enterprise use
+</Tab>
+</Tabs>
+
+### Performance Comparison
+
+<AccordionGroup>
+<Accordion icon="dollar-sign" title="Cost Comparison vs Traditional AI Infrastructure">
+**Investment Savings**
+- Initial hardware cost reduction: 80%
+- Setup and deployment savings: Significantly reduced
+- Training and implementation: Minimal requirements
+
+**Operational Savings**
+- Electricity costs: 98% reduction
+- Cooling costs: Eliminated (fanless design)
+- Maintenance costs: Near-zero maintenance required
+- IT staff requirements: Reduced complexity
+
+**3-Year Total Cost of Ownership**
+- Overall TCO savings: 99% compared to traditional AI infrastructure
+- ROI achievement: Typically within 6-12 months
+- Ongoing costs: Predictable and minimal
+</Accordion>
+
+<Accordion icon="chart-line" title="Performance vs Cloud AI Services">
+**Data Privacy Advantages**
+- Complete data sovereignty: All processing on-premises
+- No data transmission: Zero cloud dependency
+- Compliance ready: Meets strict data protection regulations
+- Security control: Full enterprise control over AI operations
+
+**Performance Benefits**
+- Latency reduction: Local processing eliminates network delays
+- Availability: No internet dependency for AI operations
+- Customization: Full control over model selection and tuning
+- Scalability: Predictable performance without usage limits
+</Accordion>
+</AccordionGroup>
+
+## Use Cases
+
+### Enterprise Applications
+
+<CardGroup cols={2}>
+<Card title="Document Processing" icon="file">
+    Automated document analysis, summarization, and information extraction for enterprise workflows.
+</Card>
+<Card title="Customer Service" icon="headset">
+    Intelligent chatbots and virtual assistants for customer support and internal help desk operations.
+</Card>
+<Card title="Content Generation" icon="pen-nib">
+    Automated content creation, technical writing, and marketing material generation.
+</Card>
+<Card title="Data Analysis" icon="chart-bar">
+    Advanced analytics, pattern recognition, and insight generation from enterprise data.
+</Card>
+</CardGroup>
+
+### Industry Solutions
+
+<Tabs>
+<Tab title="Healthcare">
+    - Medical document analysis
+    - Clinical decision support
+    - Research data processing
+    - Compliance reporting
+</Tab>
+<Tab title="Finance">
+    - Risk assessment modeling
+    - Fraud detection systems
+    - Regulatory compliance
+    - Market analysis tools
+</Tab>
+<Tab title="Manufacturing">
+    - Quality control automation
+    - Predictive maintenance
+    - Supply chain optimization
+    - Process documentation
+</Tab>
+<Tab title="Legal">
+    - Contract analysis
+    - Legal research assistance
+    - Compliance monitoring
+    - Document review automation
+</Tab>
+</Tabs>
+
+## Why Choose RM-01?
+
+<Steps>
+<Step title="Complete Data Privacy">
+    Unlike cloud-based AI services, RM-01 keeps all your data on-premises, ensuring complete privacy and compliance with data protection regulations.
+</Step>
+<Step title="Cost-Effective Operation">
+    Eliminate recurring cloud costs and reduce total cost of ownership by up to 99% compared to traditional AI infrastructure.
+</Step>
+<Step title="Enterprise-Ready">
+    Designed for enterprise environments with professional support, comprehensive documentation, and proven deployment methodologies.
+</Step>
+<Step title="Scalable Solutions">
+    From individual deployments to enterprise-wide implementations, RM-01 scales to meet your organization's needs.
+</Step>
+</Steps>
+
+## Next Steps
+
+<CardGroup cols={3}>
+<Card title="Quick Start" icon="play" href="">
+    Begin with basic setup and start using your RM-01 immediately
+</Card>
+<Card title="Development" icon="code" href="/docs/develop-guide/develop">
+    Build custom applications and integrate with your systems
+</Card>
+<Card title="Support" icon="headset" href="/docs/deploy-guide/deploy#technical-support-resources">
+    Access technical support and additional resources
+</Card>
+</CardGroup>
+
+<Note>
+Need help getting started? Our technical support team is available to assist with deployment, development, and ongoing operations. Contact us at support@rminte.com or call 158-8200-8185.
+</Note>
+
+---
+
+<div className="text-center text-sm text-gray-500 mt-8">
+© 2025 Panidea (Chengdu) Artificial Intelligence Technology Co., Ltd. All rights reserved.
+</div>

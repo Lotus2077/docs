@@ -1,0 +1,346 @@
+---
+title: "System Architecture Guide"
+description: "Complete technical reference for the three-unit system architecture including Inference Unit, Application Unit, and Hardware Control Unit configuration"
+icon: "sitemap"
+---
+
+
+## Architecture Overview
+
+Our system consists of three specialized units that work together to provide a complete AI infrastructure solution:
+
+<CardGroup cols={3}>
+<Card icon="microchip" title="Inference Unit">
+**IP Address:** 10.10.99.98  
+**Port Range:** 58000-58999  
+**Function:** Runs inference frameworks and AI models, provides computing services for machine learning workloads.
+</Card>
+
+<Card icon="browser" title="Application Unit">
+**IP Address:** 10.10.99.99  
+**Port Range:** 59000-59299  
+**Function:** Hosts user applications and system platforms, manages application lifecycle and deployment.
+</Card>
+
+<Card title="Hardware Control Unit" icon="monitor-waveform">
+**IP Address:** 10.10.99.97  
+**Port:** 80 (monitoring service)  
+**Function:** Provides hardware monitoring, configuration, and matrix display management.
+</Card>
+</CardGroup>
+
+## Computing Unit Configuration
+
+<Tip>
+The Computing Unit serves as the core processing engine, handling all AI inference tasks and model operations. Proper configuration ensures optimal performance for your machine learning workloads.
+</Tip>
+
+### Inference Framework Setup
+
+The Computing Unit runs multiple inference frameworks simultaneously:
+
+- **vLLM Inference Framework**
+  - Service: Large Language Model (LLM) processing
+  - Port: 58000
+  - Purpose: High-performance LLM inference
+
+- **TEI Embedding Model**
+  - Port: 58080
+  - Purpose: Text embedding generation
+
+- **TEI Reranker Model**
+  - Port: 58081
+  - Purpose: Search result reranking
+
+### Model Storage Configuration
+
+<Tabs>
+<Tab title="Manual Model Storage">
+Store models that you manually configure and deploy:
+
+```bash
+~/cfe/model/
+├── llm/          # Large Language Models
+├── embedding/    # Embedding Models
+└── reranker/     # Reranker Models
+```
+
+<Note>
+Use this directory for models that require custom configuration or manual deployment processes.
+</Note>
+</Tab>
+
+<Tab title="Auto-launch Model Storage">
+Store models that start automatically with the system:
+
+```bash
+~/cfe/autoModel/
+├── llm/          # Large Language Models
+├── embedding/    # Embedding Models
+└── reranker/     # Reranker Models
+```
+
+<Tip>
+Models in this directory will be automatically loaded during system startup based on the auto-launch configuration.
+</Tip>
+</Tab>
+</Tabs>
+
+### Auto-launch Configuration
+
+Configure automatic model startup behavior:
+
+**Configuration File:** `~/cfe/autorun.sh`
+
+<Note>
+This script is user-editable and unencrypted. You can modify it to specify which models should automatically start when the system boots.
+</Note>
+
+```bash ~/cfe/autorun.sh
+#!/bin/bash
+# Auto-launch configuration for Computing Unit
+# Specify default models to start automatically
+
+# Example: Start LLM model
+./start_llm_model.sh
+
+# Example: Start embedding model
+./start_embedding_model.sh
+```
+
+## Application Unit Configuration
+
+<Tip>
+The Application Unit provides a flexible deployment environment for user applications and system platforms. It includes both web serving capabilities and specialized AI platforms.
+</Tip>
+
+### Core Services
+
+**Nginx Web Server**
+- Port: 80
+- Purpose: Serves user applications and handles HTTP requests
+- Configuration: Standard nginx setup with reverse proxy capabilities
+
+**System Platforms**
+- **Dify Platform**
+  - Port: 59080
+  - Purpose: AI application development platform
+  - Features: Workflow builder, model management, API endpoints
+
+- **Altai (Local Deployment)**
+  - Port: 59299
+  - Purpose: Local AI deployment and management
+  - Features: Self-hosted AI model serving
+
+### Application Storage Structure
+
+<Tabs>
+<Tab title="Import Application Storage">
+Location for imported applications before deployment:
+
+```bash
+~/cfe/app/    # Non-encrypted imported applications
+```
+
+<Warning>
+Applications in this directory are unencrypted. Ensure proper security measures are in place before importing sensitive applications.
+</Warning>
+</Tab>
+
+<Tab title="Runtime Application Storage">
+Active application deployment location:
+
+```bash
+~/app/        # Runtime applications (on NVMe SSD)
+```
+
+<Note>
+This directory is located on the Application Unit's NVMe SSD for optimal performance during runtime.
+</Note>
+</Tab>
+</Tabs>
+
+## Hardware Control Unit Configuration
+
+<Tip>
+The Hardware Control Unit provides comprehensive monitoring and configuration capabilities. It ensures system stability and allows customization of hardware displays.
+</Tip>
+
+### Monitoring Service
+
+**Hardware Monitoring Frontend**
+- Path: `/sdcard/web`
+- Port: 80
+- Purpose: Web-based hardware monitoring interface
+
+<Note>
+The monitoring frontend is user-modifiable. You can customize the interface by editing files in the `/sdcard/web` directory.
+</Note>
+
+### Display Configuration
+
+**Matrix Display Settings**
+- Configuration File: `/sdcard/matrix.json`
+- Purpose: Configure matrix display logos and patterns
+
+```json /sdcard/matrix.json
+{
+  "logo": "custom_logo.png",
+  "brightness": 80,
+  "animation": "fade",
+  "duration": 5000
+}
+```
+
+## Setup and Configuration Steps
+
+<Steps>
+<Step title="Verify Network Configuration">
+Ensure all three units can communicate with each other:
+
+```bash
+# Test Computing Unit connectivity
+ping 10.10.99.98
+
+# Test Application Unit connectivity  
+ping 10.10.99.99
+
+# Test Hardware Control Unit connectivity
+ping 10.10.99.97
+```
+
+<Check>
+All units should respond to ping requests within the local network.
+</Check>
+</Step>
+
+<Step title="Configure Port Access">
+Verify that the required ports are available and not blocked by firewalls:
+
+- Computing Unit: Ports 58000-58999
+- Application Unit: Ports 59000-59299
+- Hardware Control Unit: Port 80
+
+<Warning>
+Ensure no port conflicts exist with other services running on your network.
+</Warning>
+</Step>
+
+<Step title="Set Up Model Storage">
+Create the required directory structure on the Computing Unit:
+
+```bash
+# Create manual model directories
+mkdir -p ~/cfe/model/{llm,embedding,reranker}
+
+# Create auto-launch model directories
+mkdir -p ~/cfe/autoModel/{llm,embedding,reranker}
+```
+
+<Check>
+Verify directories are created with proper permissions for model storage.
+</Check>
+</Step>
+
+<Step title="Configure Auto-launch Script">
+Edit the auto-launch configuration:
+
+```bash
+# Edit the auto-launch script
+nano ~/cfe/autorun.sh
+
+# Make it executable
+chmod +x ~/cfe/autorun.sh
+```
+
+<Tip>
+Test your auto-launch script manually before relying on automatic startup.
+</Tip>
+</Step>
+
+<Step title="Deploy Applications">
+Set up application storage on the Application Unit:
+
+```bash
+# Create application directories
+mkdir -p ~/cfe/app
+mkdir -p ~/app
+
+# Set appropriate permissions
+chmod 755 ~/cfe/app ~/app
+```
+
+<Check>
+Verify applications can be deployed and accessed through the configured ports.
+</Check>
+</Step>
+</Steps>
+
+## Security Considerations
+
+<Warning>
+**Important Security Notes:**
+- All imported applications and scripts are stored in non-encrypted format
+- The auto-launch script is user-editable and unencrypted
+- Ensure proper access controls are in place for sensitive operations
+- Regularly update and monitor all system components
+</Warning>
+
+## Troubleshooting
+
+<AccordionGroup>
+<Accordion icon="ethernet" title="Port Connection Issues">
+**Common Problems:**
+- Firewall blocking configured ports
+- Network connectivity issues between units
+- Port conflicts with existing services
+
+**Solutions:**
+- Check firewall rules for the required port ranges
+- Verify network connectivity using ping tests
+- Use `netstat` to identify port conflicts
+</Accordion>
+
+<Accordion icon="brain" title="Model Loading Failures">
+**Common Problems:**
+- Incorrect model directory paths
+- Insufficient permissions for model files
+- Auto-launch script configuration errors
+
+**Solutions:**
+- Verify model files are in the correct directories
+- Check file permissions with `ls -la`
+- Test auto-launch script manually
+</Accordion>
+
+<Accordion icon="docker" title="Application Deployment Issues">
+**Common Problems:**
+- Application storage path configuration
+- NVMe SSD access issues
+- Port assignment conflicts
+
+**Solutions:**
+- Verify storage paths exist and are accessible
+- Check NVMe SSD mount status
+- Review port assignments for conflicts
+</Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+After completing the system setup:
+
+1. **Deploy Your First Model**: Upload a model to the Computing Unit and test inference
+2. **Configure Applications**: Set up your first application on the Application Unit
+3. **Monitor System Health**: Use the Hardware Control Unit to monitor system performance
+4. **Customize Display**: Configure matrix display settings for your environment
+
+<Note>
+For additional technical support or advanced configuration guidance, contact your system administrator or refer to the detailed API documentation.
+</Note>
+
+---
+
+<div className="text-center text-sm text-gray-500 mt-8">
+  © 2025 Panidea (Chengdu) Artificial Intelligence Technology Co., Ltd. All rights reserved.
+</div>

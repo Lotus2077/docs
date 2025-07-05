@@ -1,0 +1,530 @@
+---
+title: "Vendor Deployment Guide"
+description: "Comprehensive guide for vendors to deploy RM-01 Portable AI Supercomputer solutions for enterprise customers using RM-01, achieving a true “plug-and-play” AI experience."
+icon: "server"
+---
+
+## Overview
+
+This guide covers the complete deployment process from preparation to after-sales support:
+
+<CardGroup cols={3}>
+<Card title="Pre-deployment Preparation" icon="clipboard-check" href="#pre-deployment-preparation">
+    Model preparation, environment assessment, and device verification
+</Card>
+<Card title="Hardware Deployment" icon="server" href="#hardware-deployment-process">
+    Installation, initialization, and network configuration
+</Card>
+<Card title="After-sales Support" icon="headset" href="#after-sales-support">
+    Ongoing support, maintenance, and customer service
+</Card>
+</CardGroup>
+
+## Pre-deployment Preparation
+
+### Model and Application Preparation
+
+Prepare suitable models and applications based on enterprise requirements:
+
+<Tabs>
+<Tab title="Standard Model Package">
+Includes common open-source models such as:
+- DeepSeek
+- Zhipu
+- Qwen
+- Other mainstream models
+
+<Note>
+Standard models are pre-configured and ready for immediate deployment across various enterprise use cases.
+</Note>
+</Tab>
+
+<Tab title="Industry-specific Package">
+Vertical domain models tailored for specific industries:
+- Healthcare and medical AI
+- Financial services models
+- Manufacturing optimization
+- Legal and compliance models
+
+<Tip>
+Industry-specific models often provide better performance for specialized enterprise workflows.
+</Tip>
+</Tab>
+
+<Tab title="Enterprise Custom Models">
+Custom trained models specific to enterprise needs:
+- Convert models to RM-01 compatible formats
+- Store in specified directory on CFexpress card
+- Ensure proper model validation and testing
+
+<Warning>
+Custom models require thorough validation to ensure compatibility with RM-01's hardware specifications.
+</Warning>
+</Tab>
+</Tabs>
+
+### Enterprise Environment Assessment
+
+Conduct thorough environment assessment before deployment:
+
+<Steps>
+<Step title="Network Environment Evaluation">
+    Assess the feasibility of connecting RM-01 to the enterprise internal network:
+    
+    - Evaluate network topology and security requirements
+    - Identify firewall and proxy configurations
+    - Plan IP addressing and network segmentation
+    - Test network bandwidth and latency requirements
+    
+    <Check>
+    Document network requirements and obtain necessary approvals from IT security team.
+    </Check>
+  </Step>
+
+<Step title="Power Supply Assessment">
+    Ensure stable power supply at the deployment location:
+    
+    - Verify power outlet availability and specifications
+    - Check for uninterruptible power supply (UPS) requirements
+    - Assess power consumption impact on facility
+    - Plan for power redundancy if needed
+    
+    <Info>
+    RM-01 requires 100W maximum power consumption with 60W TDP for optimal performance.
+    </Info>
+  </Step>
+  
+<Step title="Physical Security Review">
+    Assess physical security of device placement:
+    
+    - Evaluate physical access controls
+    - Review environmental conditions (temperature, humidity)
+    - Plan for device mounting and cable management
+    - Assess theft prevention measures
+    
+    <Warning>
+    Ensure deployment location meets enterprise security standards and environmental requirements.
+    </Warning>
+</Step>
+
+<Step title="IT Infrastructure Integration">
+    Understand existing IT infrastructure:
+    
+    - Review current AI/ML infrastructure
+    - Assess integration with existing systems
+    - Plan for user access management
+    - Evaluate monitoring and logging requirements
+  </Step>
+</Steps>
+
+### Device and Accessories Verification
+
+Before delivery, ensure all components are complete and functional:
+
+<AccordionGroup>
+<Accordion icon="box-taped" title="RM-01 Device Package">
+    **Core Components:**
+    - RM-01 Host device
+    - CFexpress Type B Storage Card (pre-installed with models and applications)
+    - MicroSD Card for system storage
+    - Quick Start Guide with setup instructions
+    - Warranty Card and documentation
+    
+    <Check>
+    Verify all components are present and undamaged before shipment.
+    </Check>
+</Accordion>
+
+<Accordion icon="sd-cards" title="RM-01 Accessories Package">
+    **Essential Accessories:**
+    - USB-C Power Adapter (PD3.1, up to 140W)
+    - USB-C to Ethernet Adapter for network connectivity
+    - Additional cables as needed
+    
+    <Tip>
+    Keep spare accessories available for immediate replacement if needed.
+    </Tip>
+</Accordion>
+</AccordionGroup>
+
+## Hardware Deployment Process
+
+### Device Installation
+
+<Steps>
+<Step title="Site Preparation">
+    Prepare the installation location:
+    
+    1. Choose optimal placement (desktop or dedicated cabinet)
+    2. Ensure adequate ventilation around the device
+    3. Verify power and network connectivity
+    4. Prepare cable management solutions
+    
+    <Warning>
+      Ensure the device is placed in a well-ventilated environment, avoiding obstruction of heat dissipation vents.
+    </Warning>
+  </Step>
+  
+<Step title="Hardware Setup">
+    Install the RM-01 device:
+    
+    1. Insert CFexpress storage card with pre-installed models and applications
+    2. Insert MicroSD card for system storage
+    3. Connect USB-C power adapter
+    4. Connect USB-C to Ethernet adapter if wired network is required
+    
+    <Note>
+    Handle storage cards carefully to avoid damage to connectors and data corruption.
+    </Note>
+</Step>
+</Steps>
+
+### System Initialization
+
+<Steps>
+<Step title="Initial Startup">
+    Power on and initialize the system:
+    
+    1. Press the power button to start the device
+    2. Monitor initialization process via connected laptop (USB-C)
+    3. Wait for automatic model and application loading (~5 minutes)
+    4. Verify system reaches ready state
+    
+    <Info>
+    During initialization, you can connect a laptop via USB-C port to monitor device status and troubleshoot if needed.
+    </Info>
+  </Step>
+  
+<Step title="System Verification">
+    Confirm successful initialization:
+    
+    - Check system status indicators
+    - Verify model loading completion
+    - Test basic device responsiveness
+    - Validate storage card recognition
+    
+    <Check>
+    System should display ready status after approximately 5 minutes of initialization.
+    </Check>
+  </Step>
+</Steps>
+
+### Network Configuration
+
+Configure network connectivity based on enterprise requirements:
+
+<Tabs>
+<Tab title="Wired Network">
+    Configure Ethernet connection:
+    
+    ```bash
+    # Static IP Configuration
+    sudo ip addr add 192.168.1.100/24 dev eth0
+    sudo ip route add default via 192.168.1.1
+    
+    # DNS Configuration
+    echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf
+    ```
+    
+    <Check>
+    Verify network connectivity with ping test to external servers.
+    </Check>
+</Tab>
+
+<Tab title="DHCP Configuration">
+    Enable automatic IP assignment:
+    
+    ```bash
+    # Enable DHCP client
+    sudo dhclient eth0
+    
+    # Verify IP assignment
+    ip addr show eth0
+    ```
+    
+    <Note>
+    DHCP is recommended for simplified network management in most enterprise environments.
+    </Note>
+</Tab>
+</Tabs>
+
+## Verification and Testing
+
+### Comprehensive Testing Protocol
+
+<Steps>
+<Step title="Functional Testing">
+    Verify core functionality:
+    
+    **Model Performance:**
+    - Test model loading and execution
+    - Verify inference speed and accuracy
+    - Check resource utilization
+    
+    **Application Testing:**
+    - Test basic application functionality
+    - Verify user interface responsiveness
+    - Check integration with enterprise systems
+    
+    <Check>
+    Document test results and compare against expected performance benchmarks.
+    </Check>
+</Step>
+
+<Step title="Performance Benchmarking">
+    Conduct performance evaluation:
+    
+    **Metrics to Test:**
+    - Model inference latency
+    - Concurrent processing capability
+    - Memory and storage utilization
+    - Network throughput
+    
+    ```bash
+    # Example performance test command
+    ./benchmark_tool --model deepseek --iterations 100 --concurrent 4
+    ```
+    
+    <Tip>
+    Use standardized benchmarking tools to ensure consistent performance evaluation across deployments.
+    </Tip>
+</Step>
+
+<Step title="Security and Access Control">
+    Verify security measures:
+    
+    - Test user authentication and authorization
+    - Verify data encryption at rest and in transit
+    - Check network access controls
+    - Validate audit logging functionality
+    
+    <Warning>
+    Ensure all security configurations meet enterprise compliance requirements before deployment approval.
+    </Warning>
+</Step>
+</Steps>
+
+## Training and Delivery
+
+### Administrator Training Program
+
+<Steps>
+<Step title="Device Operation Training">
+    Train administrators on basic device management:
+    
+    **Core Topics:**
+    - Device startup and shutdown procedures
+    - Hardware maintenance and troubleshooting
+    - Storage card management
+    - Network configuration updates
+    
+</Step>
+
+<Step title="Management Interface Training">
+    Demonstrate system management capabilities:
+    
+    - Web-based management console
+    - System monitoring and alerts
+    - User account management
+    - Configuration backup and restore
+    
+    <Tip>
+    Record training sessions for future reference and onboarding new administrators.
+    </Tip>
+</Step>
+
+<Step title="Model and Application Management">
+    Cover advanced management topics:
+    
+    - Model updates and version control
+    - Application deployment procedures
+    - Performance optimization techniques
+    - Troubleshooting common issues
+</Step>
+</Steps>
+
+### End User Training
+
+<Tabs>
+<Tab title="Basic Operations">
+    Train users on fundamental operations:
+    
+    - Application access and login procedures
+    - Basic AI model interaction
+    - File upload and processing
+    - Result interpretation and export
+    
+    <Note>
+    Customize training content based on specific departmental use cases for maximum effectiveness.
+    </Note>
+</Tab>
+
+<Tab title="Advanced Features">
+    Cover sophisticated functionality:
+    
+    - Multi-model workflow creation
+    - Custom prompt engineering
+    - Batch processing operations
+    - Integration with external tools
+    
+    <Tip>
+    Provide hands-on practice sessions with real enterprise data to enhance learning effectiveness.
+    </Tip>
+</Tab>
+</Tabs>
+
+### Documentation Delivery
+
+Provide comprehensive documentation package:
+
+<CardGroup cols={2}>
+<Card title="Device User Manual" icon="book">
+    Hardware specifications and basic operation guide
+</Card>
+<Card title="Administrator Guide" icon="user-gear">
+    System management and troubleshooting procedures
+</Card>
+<Card title="User Operation Guide" icon="users">
+    Application usage steps and best practices
+</Card>
+<Card title="Troubleshooting Guide" icon="wrench">
+    Common issues and resolution procedures
+</Card>
+</CardGroup>
+
+<Info>
+All documentation is provided in both electronic and printed formats, with the latest versions available through the management interface.
+</Info>
+
+## After-sales Support
+
+### Support Service Levels
+
+<Tabs>
+<Tab title="Standard Support">
+    **Included Services:**
+    - 12 months of remote support
+    - Business hours response (9 AM - 6 PM)
+    - Email and phone support
+    - System health monitoring
+    
+    **Response Times:**
+    - 4-hour response during business hours
+    - 24-hour resolution for standard issues
+    
+    <Check>
+    Standard support covers most enterprise deployment needs with comprehensive coverage.
+    </Check>
+</Tab>
+
+<Tab title="Premium Support">
+    **Enhanced Services:**
+    - 24/7 technical support availability
+    - 2-hour response time guarantee
+    - Priority issue resolution
+    - Dedicated support engineer
+    
+    **Additional Features:**
+    - Proactive system monitoring
+    - Quarterly performance reviews
+    - Priority access to updates
+    
+    <Tip>
+    Premium support is recommended for mission-critical deployments and high-availability requirements.
+    </Tip>
+</Tab>
+
+<Tab title="Enterprise Support">
+    **Comprehensive Services:**
+    - 30-minute emergency response
+    - On-site support when needed
+    - Custom model development assistance
+    - Integration consulting services
+    
+    **Value-Added Services:**
+    - Performance optimization consulting
+    - Custom application development
+    - Staff augmentation services
+    
+    <Note>
+    Enterprise support provides the highest level of service for complex deployments and specialized requirements.
+    </Note>
+</Tab>
+</Tabs>
+
+### Support Contact Information
+
+<CardGroup cols={3}>
+<Card title="Technical Support Hotline" icon="phone">
+    **Phone:** 158-8200-8185
+    
+    **Hours:** Monday - Friday, 9:00 AM - 9:00 PM
+    
+    Direct access to technical support engineers
+</Card>
+<Card title="Email Support" icon="envelope">
+    **Email:** support@rminte.com
+    
+    **Response:** 24-hour guarantee
+    
+    Detailed technical inquiries and documentation
+</Card>
+<Card title="Online Support" icon="globe">
+    **Website:** rminte.com
+    
+    **Chat:** Real-time during business hours
+    
+    Instant support and resource access
+</Card>
+</CardGroup>
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+<Accordion title="Does RM-01 require continuous internet connection?">
+    No. RM-01 is designed to operate completely offline, ensuring data security and independence from internet connectivity. All processing occurs locally on the device.
+</Accordion>
+
+<Accordion title="What is RM-01's power consumption?">
+    RM-01 has a maximum power consumption of 100W with a TDP of 60W, saving 98.6% energy compared to traditional AI servers. Annual electricity cost for 24/7 operation is approximately $480.
+</Accordion>
+
+<Accordion title="What model sizes does RM-01 support?">
+    RM-01 supports models ranging from 0.5B to 235B parameters (GPTQ Int4 quantization), covering all mainstream open-source models including DeepSeek, Qwen, and Llama variants.
+</Accordion>
+
+<Accordion title="How is enterprise data kept confidential?">
+    RM-01 uses hardware-level asymmetric encryption with all data processed locally. No data is ever uploaded to the cloud, ensuring complete enterprise data sovereignty and security.
+</Accordion>
+
+<Accordion title="How do enterprises evaluate RM-01's ROI?">
+    Compared to traditional AI deployment, RM-01 saves 80% in initial investment, reduces operational costs by 98%, and achieves 99% total cost of ownership savings over 3 years.
+</Accordion>
+
+<Accordion title="Are there trial services available?">
+    Yes, we offer a 7-day free trial service for enterprise customers with professional technical staff providing on-site support and evaluation assistance.
+</Accordion>
+</AccordionGroup>
+
+## Technical Support Resources
+
+<CardGroup cols={2}>
+<Card title="Product Documentation" icon="book-open" href="https://docs.rminte.com">
+    Comprehensive technical documentation and API references
+</Card>
+<Card title="Developer Community" icon="users" href="https://community.rminte.com">
+    Technical forums and best practice sharing
+</Card>
+<Card title="Application Marketplace" icon="store" href="https://marketplace.rminte.com">
+    Discover and deploy professional AI applications
+</Card>
+<Card title="Training Resources" icon="graduation-cap" href="https://training.rminte.com">
+    Video tutorials and certification programs
+</Card>
+</CardGroup>
+
+---
+
+<div className="text-center text-sm text-gray-500 mt-8">
+  © 2025 Panidea (Chengdu) Artificial Intelligence Technology Co., Ltd. All rights reserved.
+</div>

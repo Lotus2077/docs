@@ -1,97 +1,376 @@
 ---
-title: 'Quickstart'
-description: 'Start building awesome documentation in under 5 minutes'
+title: "Enterprise Quickstart"
+description: "Get your team up and running with the RM-01 AI supercomputer quickly with this comprehensive enterprise guide"
 ---
 
-## Setup your development
+## Device Overview
 
-Learn how to update your docs locally and deploy them to the public.
+The RM-01 AI supercomputer is a portable AI solution that combines high performance, security, and ease of use, specifically designed for enterprise-level AI applications. It operates offline with local computation, significantly reducing data security risks and operational costs.
 
-### Edit and preview
+### Key Features
 
-<AccordionGroup>
-  <Accordion icon="github" title="Clone your docs locally">
-    During the onboarding process, we created a repository on your Github with
-    your docs content. You can find this repository on our
-    [dashboard](https://dashboard.mintlify.com). To clone the repository
-    locally, follow these
-    [instructions](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
-    in your terminal.
-  </Accordion>
-  <Accordion icon="rectangle-terminal" title="Preview changes">
-    Previewing helps you make sure your changes look as intended. We built a
-    command line interface to render these changes locally. 
-    1. Install the
-    [Mintlify CLI](https://www.npmjs.com/package/mintlify) to preview the
-    documentation changes locally with this command: ``` npm i -g mintlify ```
-    2. Run the following command at the root of your documentation (where
-    `docs.json` is): ``` mintlify dev ```
-    <Note>
-      If you’re currently using the legacy ```mint.json``` configuration file, please update the Mintlify CLI:
-
-
-      ```npm i -g mintlify@latest```
-      And run the new upgrade command in your docs repository:
-
-      ```mintlify upgrade```
-      You should now be using the new ```docs.json``` configuration file. Feel free to delete the ```mint.json``` file from your repository.
-    </Note>
-  </Accordion>
-</AccordionGroup>
-
-### Deploy your changes
-
-<AccordionGroup>
-
-<Accordion icon="message-bot" title="Install our Github app">
-  Our Github app automatically deploys your changes to your docs site, so you
-  don't need to manage deployments yourself. You can find the link to install on
-  your [dashboard](https://dashboard.mintlify.com). Once the bot has been
-  successfully installed, there should be a check mark next to the commit hash
-  of the repo.
-</Accordion>
-<Accordion icon="rocket" title="Push your changes">
-  [Commit and push your changes to
-  Git](https://docs.github.com/en/get-started/using-git/pushing-commits-to-a-remote-repository#about-git-push)
-  for your changes to update in your docs site. If you push and don't see that
-  the Github app successfully deployed your changes, you can also manually
-  update your docs through our [dashboard](https://dashboard.mintlify.com).
-</Accordion>
-
-</AccordionGroup>
-
-## Update your docs
-
-Add content directly in your files with MDX syntax and React components. You can use any of our components, or even build your own.
-
-<CardGroup>
-
-<Card title="Add Content With MDX" icon="file" href="/essentials/markdown">
-  Add content to your docs with MDX syntax.
+<CardGroup cols={3}>
+<Card title="Powerful Performance" icon="microchip">
+- Supports 300+ mainstream open-source models
+- Up to 800 TOPS computing power
+- 128GB LPDDR5 high-speed memory
 </Card>
 
-<Card
-  title="Add Code Blocks"
-  icon="square-code"
-  href="/essentials/code"
->
-  Add code directly to your docs with syntax highlighting.
+<Card title="Ultimate Security" icon="lock">
+- Hardware-level asymmetric encryption protection
+- Data processed locally, never transmitted externally
+- Anti-tamper physical security design
 </Card>
 
-<Card
-  title="Add Images"
-  icon="image"
-  href="/essentials/images"
->
-  Add images to your docs to make them more engaging.
+<Card title="Simple Deployment" icon="bolt">
+- Deployment setup completed within 5 minutes
+- Plug-and-play, no professional IT support needed
+- Maximum power consumption only 100W (TDP 60W)
 </Card>
-
-<Card
-  title="Add Custom Components"
-  icon="puzzle-piece"
-  href="/essentials/reusable-snippets"
->
-  Add templates to your docs to make them more reusable.
-</Card>
-
 </CardGroup>
+
+### Device Interfaces
+
+<AccordionGroup>
+<Accordion title="Front Interfaces">
+- **Power Button**: Short press to turn on/off, long press for 5 seconds to force shutdown
+- **Status Indicator**: White (Running), Blue (Starting), Red (Error)
+</Accordion>
+
+<Accordion title="Top Interfaces">
+- **CFexpress Slot**: For model storage, supports hot-swapping
+- **MicroSD Slot**: For application and data storage
+- **Ext. Port**: For connecting external expansion devices
+</Accordion>
+
+<Accordion title="Side Interfaces">
+- **USB-C Power Port**: Connect to power adapter (supports PD3.1)
+- **USB-C Network Port**: Connect to enterprise network or devices
+- **Ventilation**: Ensure good ventilation, do not block
+</Accordion>
+</AccordionGroup>
+
+## Quick Start
+
+### First-time Setup
+
+<Steps>
+<Step title="Unboxing Inspection">
+Confirm the package contains the following items:
+- RM-01 Main Unit
+- CFexpress Card with pre-installed models and applications
+- MicroSD Card
+- Warranty Card
+- Quick Start Guide
+- USB-C Power Adapter
+- USB-C to Ethernet Adapter
+</Step>
+
+<Step title="Connect Power">
+- Connect the USB-C power adapter to the RM-01
+- Connect the power adapter to a power outlet
+</Step>
+
+<Step title="Start the Device">
+- Press the power button
+- Wait for the device to boot (about 1-2 minutes)
+- A steady white indicator light means the device is running normally
+</Step>
+
+<Step title="Device Connection">
+Use the USB-C to network adapter to connect to a local network or personal device (such as a phone, tablet, computer, etc.)
+</Step>
+</Steps>
+
+### Accessing the Management Interface
+
+<Tabs>
+<Tab title="Web Interface">
+1. Open a browser on a computer in the same local network
+2. Enter the device IP address or hostname (format: `http://Assigned-IP-Address:xxxx`, where xxxx is the last four digits of the device serial number)
+3. Log in using the default credentials:
+   - Username: `admin`
+   - Password: scan the corresponding QR code on the Warranty Card
+</Tab>
+
+<Tab title="Mobile App">
+1. Download and install the "RM-01 ALTAI Companion" app
+2. Open the app and scan the QR code on the device
+3. Follow the in-app prompts to complete the connection
+</Tab>
+</Tabs>
+
+<Warning>
+After first login, immediately change the default administrator password:
+1. Log in to the management interface
+2. Click the "Settings" icon in the top right corner
+3. Select "Account Security"
+4. Click "Change Password"
+5. Enter and confirm the new password
+</Warning>
+
+## Using AI Applications
+
+### View and Launch Applications
+
+<Steps>
+<Step title="View Available Applications">
+1. Log in to the management interface
+2. Click the "App Library" tab
+3. Browse the list of installed AI applications
+</Step>
+
+<Step title="Get Application Details">
+Click on the application name to view details, including functionality introduction, usage scenarios, and required resources
+</Step>
+
+<Step title="Launch Application">
+1. Click the "Launch" button
+2. The application will open in a new tab
+3. Follow the application prompts to operate
+</Step>
+</Steps>
+
+## Data Management
+
+### Data Import
+
+<Tabs>
+<Tab title="Single File Upload">
+1. Find the "Upload" or "Import" button in the application
+2. Select the file to upload
+3. Wait for the upload to complete
+</Tab>
+
+<Tab title="Batch Import">
+1. Prepare the files to be imported
+2. Use the provided batch import tool
+3. Select the folder or multiple files
+4. Start the import process
+</Tab>
+</Tabs>
+
+### Data Security Guarantees
+
+<Info>
+RM-01 uses multiple security measures to protect your data
+</Info>
+
+<CardGroup cols={2}>
+<Card title="Local Processing" icon="computer">
+All data is processed within the device, never uploaded to the cloud
+</Card>
+
+<Card title="Hardware Encryption" icon="fingerprint">
+Uses asymmetric encryption technology to protect stored data
+</Card>
+
+<Card title="IP5X Sealing" icon="droplet">
+Dust and moisture-proof design, prevents physical disassembly
+</Card>
+
+<Card title="Permission Control" icon="users-gear">
+Granular user permission management system
+</Card>
+</CardGroup>
+
+## User Management
+
+### Adding Users
+
+<Steps>
+<Step title="Log in as Administrator">
+Use an administrator account to access the management interface
+</Step>
+
+<Step title="Enter User Management">
+Click on the "User Management" option in the left navigation bar
+</Step>
+
+<Step title="Create New User">
+Click the "Add User" button
+</Step>
+
+<Step title="Fill in User Information">
+Enter username, email, initial password, and permission level
+</Step>
+
+<Step title="Complete Creation">
+Click the "Create" button to complete user addition
+</Step>
+</Steps>
+
+### Permission Settings
+
+RM-01 supports granular permission control:
+
+<CardGroup cols={2}>
+<Card title="Administrator" icon="users-gear">
+Full access permissions, including system settings
+</Card>
+
+<Card title="Advanced User" icon="user-tie">
+Can use all applications, manage their own data
+</Card>
+
+<Card title="Standard User" icon="user">
+Can use designated applications, restricted data access
+</Card>
+
+<Card title="Guest" icon="user-secret">
+Can only use specific demo applications
+</Card>
+</CardGroup>
+
+<Note>
+**Adjusting User Permissions**
+1. Enter "User Management"
+2. Select the user to modify
+3. Click "Edit Permissions"
+4. Set application access permissions and data access scope
+5. Save changes
+</Note>
+
+## Regular Maintenance
+
+### Status Monitoring
+
+<Tip>
+Regular system status checks ensure smooth operation
+</Tip>
+
+After logging into the management interface, check the system status information on the dashboard:
+
+<CardGroup cols={3}>
+<Card title="Performance Metrics" icon="tachometer-alt">
+- CPU usage
+- Memory usage
+</Card>
+
+<Card title="Storage Status" icon="hdd">
+- Storage space usage
+- Data read/write speed
+</Card>
+
+<Card title="System Status" icon="thermometer-half">
+- Operating temperature
+- Network connection status
+</Card>
+</CardGroup>
+
+### Update Management
+
+<Tabs>
+<Tab title="Model Updates">
+1. Contact your service provider for model updates
+</Tab>
+
+<Tab title="Application Updates">
+1. Contact your service provider for application updates
+</Tab>
+
+<Tab title="System Updates">
+1. Contact your service provider for system updates
+</Tab>
+</Tabs>
+
+### Performance Optimization
+
+<Warning>
+If you notice device performance degradation, try the following steps
+</Warning>
+
+<Steps>
+<Step title="Close Unused Applications">
+Go to "Application Management" and stop any applications you don't need
+</Step>
+
+<Step title="Clear Cache">
+Go to "System Maintenance" and select the "Clear Cache" option
+</Step>
+
+<Step title="Restart Device">
+Select "Restart" in the management interface, or short press the power button and select "Restart"
+</Step>
+</Steps>
+
+### Troubleshooting
+
+<AccordionGroup>
+<Accordion title="Device won't start">
+**Possible causes and solutions**:
+- **Power issue**: Check power adapter connection, ensure using original power supply
+- **Storage card issue**: Try removing and reinserting the storage card
+- **System issue**: Hold the power button for 10 seconds to force shutdown, then restart
+</Accordion>
+
+<Accordion title="Application won't start">
+**Possible causes and solutions**:
+- **Insufficient resources**: Close other running applications
+- **Corrupted application**: Reinstall the application
+- **Model issue**: Check if the required models are correctly loaded
+</Accordion>
+
+<Accordion title="Can't connect to network">
+**Possible causes and solutions**:
+- **Network adapter issue**: Check the USB-C network adapter connection
+- **Network settings error**: Check network configuration, especially IP address settings
+- **Firewall restrictions**: Confirm the enterprise firewall is not blocking the device connection
+</Accordion>
+
+<Accordion title="Poor performance">
+**Possible causes and solutions**:
+- **Multiple applications running simultaneously**: Reduce the number of running applications
+- **Large model load**: Switch to a smaller model
+- **High temperature**: Ensure good device ventilation, avoid stacking
+- **Insufficient storage space**: Clear unnecessary data
+</Accordion>
+</AccordionGroup>
+
+## Getting Support
+
+### Service Provider Contact Information
+
+<CardGroup cols={2}>
+<Card title="Technical Support Hotline" icon="phone">
+400-XXX-XXXX (Weekdays 9:00-18:00)
+</Card>
+
+<Card title="Email Support" icon="envelope">
+support@rminte.com
+</Card>
+
+<Card title="Online Support" icon="earth-asia">
+https://support.rminte.com
+</Card>
+</CardGroup>
+
+### Learning Resources
+
+<CardGroup cols={2}>
+<Card title="Knowledge Base" href="https://kb.rminte.com" icon="book">
+Comprehensive documentation and guides
+</Card>
+
+<Card title="Video Tutorials" href="https://academy.rminte.com" icon="video">
+Step-by-step visual learning materials
+</Card>
+
+<Card title="Developer Community" href="https://developer.rminte.com" icon="code">
+Connect with other developers and experts
+</Card>
+
+<Card title="User Forum" href="https://forum.rminte.com" icon="comments">
+Community discussions and Q&A
+</Card>
+</CardGroup>
+
+<Check>
+Congratulations! You have completed the basic setup and usage overview of RM-01! Now you can start exploring the endless possibilities that AI technology brings to your enterprise. If you have any questions, please contact your service provider or visit our support center for assistance.
+</Check>
+
+---
+
+<div className="text-center text-sm text-gray-500 mt-8">
+  © 2025 Panidea (Chengdu) Artificial Intelligence Technology Co., Ltd. All rights reserved.
+</div>
