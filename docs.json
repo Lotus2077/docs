@@ -14,15 +14,16 @@
         "tab": "Guides",
         "groups": [
           {
-            "group": "Get Started",
+            "group": "Welcome to RMinte",
             "pages": [
               "index",
-              "quickstart"
+              "specifications"
             ]
           },
           {
             "group": "Essentials",
             "pages": [
+              "essentials/quickstart",
               "essentials/deploy",
               "essentials/develop"
             ]
@@ -37,8 +38,8 @@
     }
   },
   "logo": {
-    "light": "/logo/NEWlogopluswordsLight.svg",
-    "dark": "/logo/NEWlogopluswordsDark.png"
+    "light": "/logo/LogoLight.svg",
+    "dark": "/logo/LogoDark.svg"
   },
   "navbar": {
     "links": [
