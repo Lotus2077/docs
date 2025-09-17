@@ -51,9 +51,9 @@
           {
             "group": "核心",
             "pages": [
-              "essentials/quickstart",
-              "essentials/deploy",
-              "essentials/develop"
+              "hexin/kuaisurumen",
+              "hexin/fuwushangbushu",
+              "hexin/xitongjiagou"
             ]
           }
         ]

@@ -1,0 +1,377 @@
+---
+title: "企业快速入门"
+description: "通过这份全面的企业指南，快速让您的团队开始使用 RM-01 AI 超级计算机"
+icon: "play"
+---
+
+## 设备概述
+
+RM-01 AI 超级计算机是一款便携式 AI 解决方案，结合了高性能、安全性和易用性，专为企业级 AI 应用而设计。它在本地进行离线运算，显著降低了数据安全风险和运营成本。
+
+### 主要特性
+
+<CardGroup cols={3}>
+<Card title="强大性能" icon="microchip">
+- 支持 300+ 主流开源模型
+- 高达 2070 TFLOPS 算力
+- 128GB LPDDR5 高速显存
+</Card>
+
+<Card title="极致安全" icon="lock">
+- 硬件级非对称加密保护
+- 数据本地处理，永不对外传输
+- 防篡改物理安全设计
+</Card>
+
+<Card title="简单部署" icon="bolt">
+- 5 分钟内完成部署设置
+- 即插即用，无需专业 IT 支持
+- 最大功耗仅 140W（TDP 60W）
+</Card>
+</CardGroup>
+
+### 设备接口
+
+<AccordionGroup>
+<Accordion title="正面接口">
+- **电源按钮**：短按开/关机，长按 5 秒强制关机
+- **状态指示灯**：白色（运行中）、蓝色（启动中）、红色（错误）
+</Accordion>
+
+<Accordion title="顶部接口">
+- **CFexpress 插槽**：用于模型和应用存储，支持热插拔
+- **MicroSD 插槽**：用于Logo定制和密钥存储
+- **扩展端口**：用于连接外部扩展设备（支持多模态输入）
+</Accordion>
+
+<Accordion title="侧面接口">
+- **USB-C 电源端口**：连接电源适配器（支持 PD3.1）
+- **USB-C 网络端口**：连接个人设备或企业交换机
+- **通风口**：确保通风良好，请勿遮挡
+</Accordion>
+</AccordionGroup>
+
+## 快速开始
+
+### 首次设置
+
+<Steps>
+<Step title="开箱检查">
+确认包装内包含以下物品：
+- RM-01 主机
+- 预装模型和应用的 CFexpress 卡
+- MicroSD 卡
+- 保修卡
+- 快速入门指南
+- USB-C 电源适配器
+- USB-C 转以太网适配器
+</Step>
+
+<Step title="连接电源">
+- 将 USB-C 电源适配器连接到 RM-01
+- 将电源适配器连接到电源插座
+</Step>
+
+<Step title="启动设备">
+- 按下电源按钮
+- 等待设备启动（约 1-2 分钟）
+- 稳定的白色指示灯表示设备正常运行
+</Step>
+
+<Step title="设备连接">
+使用 USB-C 转网络适配器连接到本地网络或个人设备（如手机、平板电脑、计算机等）
+</Step>
+</Steps>
+
+### 访问管理界面
+
+<Tabs>
+<Tab title="Web 界面">
+1. 在同一本地网络的计算机上打开浏览器
+2. 输入设备 IP 地址或主机名（格式：`http://分配的IP地址:xxxx`，其中 xxxx 是设备序列号的后四位）
+3. 使用默认凭据登录：
+   - 用户名：`admin`
+   - 密码：扫描保修卡上的相应二维码
+</Tab>
+
+<Tab title="移动应用">
+1. 下载并安装"RM-01 ALTAI Companion"应用
+2. 打开应用并扫描设备上的二维码
+3. 按照应用内提示完成连接
+</Tab>
+</Tabs>
+
+<Warning>
+首次登录后，请立即更改默认管理员密码：
+1. 登录管理界面
+2. 点击右上角的"设置"图标
+3. 选择"账户安全"
+4. 点击"更改密码"
+5. 输入并确认新密码
+</Warning>
+
+## 使用 AI 应用
+
+### 查看和启动应用
+
+<Steps>
+<Step title="查看可用应用">
+1. 登录管理界面
+2. 点击"应用库"标签
+3. 浏览已安装的 AI 应用列表
+</Step>
+
+<Step title="获取应用详情">
+点击应用名称查看详细信息，包括功能介绍、使用场景和所需资源
+</Step>
+
+<Step title="启动应用">
+1. 点击"启动"按钮
+2. 应用将在新标签页中打开
+3. 按照应用提示进行操作
+</Step>
+</Steps>
+
+## 数据管理
+
+### 数据导入
+
+<Tabs>
+<Tab title="单文件上传">
+1. 在应用中找到"上传"或"导入"按钮
+2. 选择要上传的文件
+3. 等待上传完成
+</Tab>
+
+<Tab title="批量导入">
+1. 准备要导入的文件
+2. 使用提供的批量导入工具
+3. 选择文件夹或多个文件
+4. 启动导入过程
+</Tab>
+</Tabs>
+
+### 数据安全保障
+
+<Info>
+RM-01 使用多重安全措施保护您的数据
+</Info>
+
+<CardGroup cols={2}>
+<Card title="本地处理" icon="computer">
+所有数据在设备内处理，永不上传到云端
+</Card>
+
+<Card title="硬件加密" icon="fingerprint">
+使用非对称加密技术保护存储数据
+</Card>
+
+<Card title="IP5X 密封" icon="droplet">
+防尘防潮设计，防止物理拆解
+</Card>
+
+<Card title="权限控制" icon="users-gear">
+细粒度用户权限管理系统
+</Card>
+</CardGroup>
+
+## 用户管理
+
+### 添加用户
+
+<Steps>
+<Step title="以管理员身份登录">
+使用管理员账户访问管理界面
+</Step>
+
+<Step title="进入用户管理">
+点击左侧导航栏中的"用户管理"选项
+</Step>
+
+<Step title="创建新用户">
+点击"添加用户"按钮
+</Step>
+
+<Step title="填写用户信息">
+输入用户名、邮箱、初始密码和权限级别
+</Step>
+
+<Step title="完成创建">
+点击"创建"按钮完成用户添加
+</Step>
+</Steps>
+
+### 权限设置
+
+RM-01 支持细粒度权限控制：
+
+<CardGroup cols={2}>
+<Card title="管理员" icon="users-gear">
+完全访问权限，包括系统设置
+</Card>
+
+<Card title="高级用户" icon="user-tie">
+可以使用所有应用，管理自己的数据
+</Card>
+
+<Card title="标准用户" icon="user">
+可以使用指定应用，受限的数据访问
+</Card>
+
+<Card title="访客" icon="user-secret">
+仅能使用特定演示应用
+</Card>
+</CardGroup>
+
+<Note>
+**调整用户权限**
+1. 进入"用户管理"
+2. 选择要修改的用户
+3. 点击"编辑权限"
+4. 设置应用访问权限和数据访问范围
+5. 保存更改
+</Note>
+
+## 定期维护
+
+### 状态监控
+
+<Tip>
+定期系统状态检查确保稳定运行
+</Tip>
+
+登录管理界面后，在仪表板上查看系统状态信息：
+
+<CardGroup cols={3}>
+<Card title="性能指标" icon="tachometer-alt">
+- CPU 使用率
+- 内存使用率
+</Card>
+
+<Card title="存储状态" icon="hdd">
+- 存储空间使用情况
+- 数据读写速度
+</Card>
+
+<Card title="系统状态" icon="thermometer-half">
+- 运行温度
+- 网络连接状态
+</Card>
+</CardGroup>
+
+### 更新管理
+
+<Tabs>
+<Tab title="模型更新">
+1. 联系您的服务提供商获取模型更新
+</Tab>
+
+<Tab title="应用更新">
+1. 联系您的服务提供商获取应用更新
+</Tab>
+
+<Tab title="系统更新">
+1. 联系您的服务提供商获取系统更新
+</Tab>
+</Tabs>
+
+### 性能优化
+
+<Warning>
+如果您注意到设备性能下降，请尝试以下步骤
+</Warning>
+
+<Steps>
+<Step title="关闭未使用的应用">
+前往"应用管理"并停止任何不需要的应用
+</Step>
+
+<Step title="清理缓存">
+前往"系统维护"并选择"清理缓存"选项
+</Step>
+
+<Step title="重启设备">
+在管理界面选择"重启"，或短按电源按钮并选择"重启"
+</Step>
+</Steps>
+
+### 故障排除
+
+<AccordionGroup>
+<Accordion title="设备无法启动">
+**可能原因和解决方案**：
+- **电源问题**：检查电源适配器连接，确保使用原装电源
+- **存储卡问题**：尝试取出并重新插入存储卡
+- **系统问题**：按住电源按钮 10 秒强制关机，然后重新启动
+</Accordion>
+
+<Accordion title="应用无法启动">
+**可能原因和解决方案**：
+- **资源不足**：关闭其他运行的应用
+- **应用损坏**：重新安装应用
+- **模型问题**：检查所需模型是否正确加载
+</Accordion>
+
+<Accordion title="无法连接到网络">
+**可能原因和解决方案**：
+- **网络适配器问题**：检查 USB-C 网络适配器连接
+- **网络设置错误**：检查网络配置，特别是 IP 地址设置
+- **防火墙限制**：确认企业防火墙未阻止设备连接
+</Accordion>
+
+<Accordion title="性能不佳">
+**可能原因和解决方案**：
+- **多个应用同时运行**：减少运行的应用数量
+- **大型模型加载**：切换到较小的模型
+- **温度过高**：确保设备通风良好，避免堆叠
+- **存储空间不足**：清理不必要的数据
+</Accordion>
+</AccordionGroup>
+
+## 获取支持
+
+### 服务提供商联系信息
+
+<CardGroup cols={2}>
+<Card title="技术支持热线" icon="phone">
+400-XXX-XXXX（工作日 9:00-18:00）
+</Card>
+
+<Card title="邮件支持" icon="envelope">
+support@rminte.com
+</Card>
+
+<Card title="在线支持" icon="earth-asia">
+https://support.rminte.com
+</Card>
+</CardGroup>
+
+### 学习资源
+
+<CardGroup cols={2}>
+<Card title="知识库" href="https://kb.rminte.com" icon="book">
+全面的文档和指南
+</Card>
+
+<Card title="视频教程" href="https://academy.rminte.com" icon="video">
+分步骤的可视化学习材料
+</Card>
+
+<Card title="开发者社区" href="https://developer.rminte.com" icon="code">
+与其他开发者和专家交流
+</Card>
+
+<Card title="用户论坛" href="https://forum.rminte.com" icon="comments">
+社区讨论和问答
+</Card>
+</CardGroup>
+
+<Check>
+恭喜！您已完成 RM-01 的基本设置和使用概览！现在您可以开始探索 AI 技术为您的企业带来的无限可能。如有任何问题，请联系您的服务提供商或访问我们的支持中心获取帮助。
+</Check>
+
+---
+
+<div className="text-center text-sm text-gray-500 mt-8">
+  © 2025 泛灵（成都）人工智能科技有限公司 版权所有
+</div>
