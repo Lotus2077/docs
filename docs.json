@@ -9,12 +9,15 @@
   },
   "favicon": "/favicon.svg",
   "navigation": {
+    "languages": [ 
+      {
+        "language": "en",
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "Documentation",
         "groups": [
           {
-            "group": "Welcome to RMinte",
+            "group": "Get Started",
             "pages": [
               "index",
               "specifications"
@@ -30,7 +33,33 @@
           }
         ]
       }
-    ],
+    ]
+      },
+    {
+        "language": "cn",
+      "tabs": [
+      {
+        "tab": "使用文档",
+        "groups": [
+          {
+            "group": "入门",
+            "pages": [
+              "index",
+              "specifications"
+            ]
+          },
+          {
+            "group": "核心",
+            "pages": [
+              "essentials/quickstart",
+              "essentials/deploy",
+              "essentials/develop"
+            ]
+          }
+        ]
+      }
+    ]
+    },
     "global": {
       "anchors": [
 
