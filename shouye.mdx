@@ -1,5 +1,141 @@
 ---
-title: 'New file'
-description: 'Description of your new file.'
+title: "简介"
+description: "欢迎使用 RM-01 AI 超级计算机文档 - 您部署和管理企业级 AI 解决方案的综合指南"
 ---
 
+<iframe className="w-full aspect-video rounded-xl" src="https://www.youtube.com/embed/qEKqEdGf9o8?si=34GlLpjV77RF_thm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen />
+
+## 什么是 RM-01？
+
+RM-01是一款先进的便携式 AI 超级计算机，专为千亿级大型语言模型和AI应用的本地化部署而设计。　RM-01专为企业环境打造，在提供强大 AI 能力的同时，确保数据主权和安全性完全掌控在您手中。
+
+### 核心能力
+
+<CardGroup cols={2}>
+    <Card title="高性能本地推理" icon="rocket">
+        高达 2070 TFLOPS (FP4) 的推理能力，配备 32/64/128GB GPU 内存，实现高效的本地 AI 推理
+    </Card>
+    <Card title="企业 AI 一站式解决方案" icon="sd-card">
+        专用 24GB RAM 用于部署 AI 应用，8TB SSD 用于 RAG 数据存储
+    </Card>
+    <Card title="企业级安全" icon="shield">
+        硬件级非对称加密和安全密钥管理，提供完全私有的本地化运行，确保数据不离开您的设备
+    </Card>
+    <Card title="轻量化部署" icon="feather">
+        部署、维护成本为零，学习曲线平缓，是企业最具成本效益的本地 AI 解决方案
+    </Card>
+</CardGroup>
+
+## 核心特性
+
+### 高性能本地推理与灵活的模型支持
+
+
+<Tabs>
+<Tab title="模型范围">
+    **支持的模型大小和类型：**
+    - 0.5B 至 235B 参数（GPTQ Int4 量化）
+    - 主流开源模型（DeepSeek、Qwen、Llama）
+    - 定制企业/行业专用模型
+    - 支持多模态模型
+</Tab>
+<Tab title="性能">
+    **推理能力：**
+    - 支持多模型并发推理
+    - 多用户支持
+    - 硬件加速推理，总吞吐量超过 2000 TPS（每秒token数）
+</Tab>
+<Tab title="部署">
+    **部署保证：**
+    - 即插即用安装
+    - 实时模型切换
+    - 零运维设计
+    - 无缝企业集成
+  </Tab>
+</Tabs>
+
+### 企业 AI 一站式解决方案
+<Tabs>
+    <Tab title="AI 应用优先">
+        - 24GB 专用 RAM 用于 AI 应用
+        - 使用 Docker 管理和部署 AI 应用
+        - 非对称硬件级加密确保应用安全交付
+    </Tab>
+    <Tab title="RAG 原生支持">
+        - 嵌入模型自动拉起
+        - 重排序模型自动拉起
+        - 向量数据库自动拉起
+        - 8TB SSD 用于向量数据存储
+    </Tab>
+    <Tab title="最大兼容性">
+        - 一个 USB-C 端口连接任何设备
+        - RM-01将被识别为网络设备
+        - 使用分配的本地 IP 地址和 API 来使用和管理 AI 应用/模型
+        - 可通过 USB-C 转以太网适配器作为服务器使用
+    </Tab>
+</Tabs>
+
+### 企业级安全与隐私
+
+<Steps>
+  <Step title="数据主权">
+    所有数据处理均在您的设备本地进行。任何信息都不会传输到外部服务器或云服务。
+</Step>
+<Step title="硬件加密">
+    内置的硬件级加密确保您的数据始终安全，即使设备丢失或被盗。
+</Step>
+<Step title="访问控制">
+    企业级用户身份验证和授权系统防止未经授权的访问。
+  </Step>
+  <Step title="合规就绪">
+    满足数据保护和隐私法规的行业标准，包括 GDPR、HIPAA 和 SOC 2。
+  </Step>
+</Steps>
+
+### 轻量化部署实现企业低 TCO
+
+<Tabs>
+    <Tab title="部署成本">
+        - 一键300秒内零成本部署
+        - 无需专门的 IT 人员
+        - 不侵入现有 IT 基础设施
+    </Tab>
+    <Tab title="维护成本">
+        - 极其稳定可靠，零运维成本
+        - 电源关闭并重新开启即可从任何意外故障中恢复
+        - 无需专门的维护人员
+    </Tab>
+    <Tab title="学习曲线">
+        - 企业用户学习曲线平缓，无需学习复杂的 AI 技术
+        - 卡带式更换，轻松切换任何 AI 解决方案
+    </Tab>
+</Tabs>
+
+## 下一步是什么？
+
+根据您的角色和需求选择您的路径：
+
+<CardGroup cols={3}>
+  <Card title="企业快速入门" icon="play" href="quickstart">
+    **面向企业用户**
+
+    开始使用您的 RM-01 设备，包括硬件设置、管理界面访问和使用 AI 应用。
+  </Card>
+  <Card title="供应商部署指南" icon="server" href="essentials/deploy">
+    **面向供应商和服务商**
+
+    在企业环境中实施 RM-01 的完整部署指南，包括模型准备和系统集成。
+  </Card>
+  <Card title="系统架构指南" icon="sitemap" href="essentials/develop">
+    **面向开发者**
+
+    在 RM-01 上构建应用程序的技术指南，涵盖系统架构、环境设置和模型集成。
+  </Card>
+</CardGroup>
+
+---
+
+<div className="text-center text-sm text-gray-500 mt-8">
+© 2025 泛灵（成都）人工智能科技有限公司。保留所有权利。
+
+</div>
