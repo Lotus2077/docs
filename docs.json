@@ -36,7 +36,7 @@
     ]
       },
     {
-        "language": "cn",
+      "language": "cn",
       "tabs": [
       {
         "tab": "使用文档",
@@ -44,8 +44,8 @@
           {
             "group": "入门",
             "pages": [
-              "index",
-              "specifications"
+              "shouye",
+              "jishucanshu"
             ]
           },
           {
