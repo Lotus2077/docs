@@ -1,343 +1,421 @@
 ---
-title: "System Architecture Guide"
-description: "Complete technical reference for the three-unit system architecture including Inference Unit, Application Unit, and Hardware Control Unit configuration"
-icon: "sitemap"
+title: "RM-01 Developer Guide"
+description: "Comprehensive guide to RM-01 system architecture, module configuration, network setup and model deployment"
+icon: "code"
 ---
 
+## Overview
 
-## Architecture Overview
-
-Our system consists of three specialized units that work together to provide a complete AI infrastructure solution:
+This guide provides developers with complete technical documentation for the RM-01 portable supercomputer, covering system architecture, network configuration, model deployment and other core content:
 
 <CardGroup cols={3}>
-<Card icon="microchip" title="Inference Unit">
-**IP Address:** 10.10.99.98  
-**Port Range:** 58000-58999  
-**Function:** Runs inference frameworks and AI models, provides computing services for machine learning workloads.
+<Card title="Network Configuration" icon="network-wired" href="#network-configuration">
+    Configure network connections for data interaction between device and host
 </Card>
 
-<Card icon="browser" title="Application Unit">
-**IP Address:** 10.10.99.99  
-**Port Range:** 59000-59299  
-**Function:** Hosts user applications and system platforms, manages application lifecycle and deployment.
+<Card title="System Architecture" icon="microchip" href="#system-architecture">
+    Understand how the inference module, application module and management chip work together
 </Card>
 
-<Card title="Hardware Control Unit" icon="monitor-waveform">
-**IP Address:** 10.10.99.97  
-**Port:** 80 (monitoring service)  
-**Function:** Provides hardware monitoring, configuration, and matrix display management.
+<Card title="Model Deployment" icon="brain" href="#model-deployment">
+    Master AI model deployment, configuration and optimization methods
 </Card>
 </CardGroup>
 
-## Computing Unit Configuration
-
-<Tip>
-The Computing Unit serves as the core processing engine, handling all AI inference tasks and model operations. Proper configuration ensures optimal performance for your machine learning workloads.
-</Tip>
-
-### Inference Framework Setup
-
-The Computing Unit runs multiple inference frameworks simultaneously:
-
-- **vLLM Inference Framework**
-  - Service: Large Language Model (LLM) processing
-  - Port: 58000
-  - Purpose: High-performance LLM inference
-
-- **TEI Embedding Model**
-  - Port: 58080
-  - Purpose: Text embedding generation
-
-- **TEI Reranker Model**
-  - Port: 58081
-  - Purpose: Search result reranking
-
-### Model Storage Configuration
-
-<Tabs>
-<Tab title="Manual Model Storage">
-Store models that you manually configure and deploy:
-
-```bash
-~/cfe/model/
-├── llm/          # Large Language Models
-├── embedding/    # Embedding Models
-└── reranker/     # Reranker Models
-```
-
-<Note>
-Use this directory for models that require custom configuration or manual deployment processes.
-</Note>
-</Tab>
-
-<Tab title="Auto-launch Model Storage">
-Store models that start automatically with the system:
-
-```bash
-~/cfe/autoModel/
-├── llm/          # Large Language Models
-├── embedding/    # Embedding Models
-└── reranker/     # Reranker Models
-```
-
-<Tip>
-Models in this directory will be automatically loaded during system startup based on the auto-launch configuration.
-</Tip>
-</Tab>
-</Tabs>
-
-### Auto-launch Configuration
-
-Configure automatic model startup behavior:
-
-**Configuration File:** `~/cfe/autorun.sh`
-
-<Note>
-This script is user-editable and unencrypted. You can modify it to specify which models should automatically start when the system boots.
-</Note>
-
-```bash ~/cfe/autorun.sh
-#!/bin/bash
-# Auto-launch configuration for Computing Unit
-# Specify default models to start automatically
-
-# Example: Start LLM model
-./start_llm_model.sh
-
-# Example: Start embedding model
-./start_embedding_model.sh
-```
-
-## Application Unit Configuration
-
-<Tip>
-The Application Unit provides a flexible deployment environment for user applications and system platforms. It includes both web serving capabilities and specialized AI platforms.
-</Tip>
-
-### Core Services
-
-**Nginx Web Server**
-- Port: 80
-- Purpose: Serves user applications and handles HTTP requests
-- Configuration: Standard nginx setup with reverse proxy capabilities
-
-**System Platforms**
-- **Dify Platform**
-  - Port: 59080
-  - Purpose: AI application development platform
-  - Features: Workflow builder, model management, API endpoints
-
-- **Altai (Local Deployment)**
-  - Port: 59299
-  - Purpose: Local AI deployment and management
-  - Features: Self-hosted AI model serving
-
-### Application Storage Structure
-
-<Tabs>
-<Tab title="Import Application Storage">
-Location for imported applications before deployment:
-
-```bash
-~/cfe/app/    # Non-encrypted imported applications
-```
-
 <Warning>
-Applications in this directory are unencrypted. Ensure proper security measures are in place before importing sensitive applications.
+**Read Before Use**
+
+RM-01 consists of an **Inference Module**, an **Application Module**, and an **Encryption and Management Chip** (hereinafter referred to as the Management Module), interconnected via an **onboard Ethernet switch chip**, forming an internal LAN subnet. When a user connects to a host (e.g., PC, smartphone, iPad) via the **USB Type-C** interface, RM-01 will virtualize an Ethernet interface for the host through USB Ethernet functionality. The host will then obtain an IP address and automatically join the subnet for data interaction.
 </Warning>
-</Tab>
 
-<Tab title="Runtime Application Storage">
-Active application deployment location:
+<Info>
+After the device is powered on and connected to the host via the **USB Type-C** interface, the system will automatically configure the local network subnet. The **user host** will be assigned a static IP address `10.10.99.100`. The **Inference Module** (IP: `10.10.99.98`) and the **Application Module** (IP: `10.10.99.99`)—both deploy independent SSH services, allowing users to access them directly via standard SSH clients (e.g., OpenSSH, PuTTY). The Management Module, however, requires access via a serial port tool.
+</Info>
 
-```bash
-~/app/        # Runtime applications (on NVMe SSD)
-```
+## Network Configuration
 
-<Note>
-This directory is located on the Application Unit's NVMe SSD for optimal performance during runtime.
-</Note>
-</Tab>
-</Tabs>
+### How to Provide Internet Access to RM-01 from the Host (Using macOS as an Example)
 
-## Hardware Control Unit Configuration
-
-<Tip>
-The Hardware Control Unit provides comprehensive monitoring and configuration capabilities. It ensures system stability and allows customization of hardware displays.
-</Tip>
-
-### Monitoring Service
-
-**Hardware Monitoring Frontend**
-- Path: `/sdcard/web`
-- Port: 80
-- Purpose: Web-based hardware monitoring interface
-
-<Note>
-The monitoring frontend is user-modifiable. You can customize the interface by editing files in the `/sdcard/web` directory.
-</Note>
-
-### Display Configuration
-
-**Matrix Display Settings**
-- Configuration File: `/sdcard/matrix.json`
-- Purpose: Configure matrix display logos and patterns
-
-```json /sdcard/matrix.json
-{
-  "logo": "custom_logo.png",
-  "brightness": 80,
-  "animation": "fade",
-  "duration": 5000
-}
-```
-
-## Setup and Configuration Steps
+After connecting the **user host** via USB Type-C, RM-01 will appear in the network interface list as:
+- **`AX88179A`** (Developer Version)
+- **`RMinte RM-01`** (Commercial Release Version)
 
 <Steps>
-<Step title="Verify Network Configuration">
-Ensure all three units can communicate with each other:
-
-```bash
-# Test Computing Unit connectivity
-ping 10.10.99.98
-
-# Test Application Unit connectivity  
-ping 10.10.99.99
-
-# Test Hardware Control Unit connectivity
-ping 10.10.99.97
-```
-
-<Check>
-All units should respond to ping requests within the local network.
-</Check>
+<Step title="Open System Settings">
+Open **System Settings**
 </Step>
 
-<Step title="Configure Port Access">
-Verify that the required ports are available and not blocked by firewalls:
-
-- Computing Unit: Ports 58000-58999
-- Application Unit: Ports 59000-59299
-- Hardware Control Unit: Port 80
-
-<Warning>
-Ensure no port conflicts exist with other services running on your network.
-</Warning>
+<Step title="Go to Network Sharing">
+Go to **Network** → **Sharing**
 </Step>
 
-<Step title="Set Up Model Storage">
-Create the required directory structure on the Computing Unit:
-
-```bash
-# Create manual model directories
-mkdir -p ~/cfe/model/{llm,embedding,reranker}
-
-# Create auto-launch model directories
-mkdir -p ~/cfe/autoModel/{llm,embedding,reranker}
-```
-
-<Check>
-Verify directories are created with proper permissions for model storage.
-</Check>
+<Step title="Enable Internet Sharing">
+Enable **Internet Sharing**
 </Step>
 
-<Step title="Configure Auto-launch Script">
-Edit the auto-launch configuration:
-
-```bash
-# Edit the auto-launch script
-nano ~/cfe/autorun.sh
-
-# Make it executable
-chmod +x ~/cfe/autorun.sh
-```
-
-<Tip>
-Test your auto-launch script manually before relying on automatic startup.
-</Tip>
+<Step title="Configure Sharing Settings">
+Click the **"i" icon** next to the sharing settings to enter the configuration interface:
+- Set **"Share your connection from"** to: **Wi-Fi**
+- In **"To computers using"**, select: **AX88179A** or **RMinte RM-01** (depending on the device model)
 </Step>
 
-<Step title="Deploy Applications">
-Set up application storage on the Application Unit:
+<Step title="Complete Configuration">
+Click **Done**
+</Step>
 
-```bash
-# Create application directories
-mkdir -p ~/cfe/app
-mkdir -p ~/app
-
-# Set appropriate permissions
-chmod 755 ~/cfe/app ~/app
-```
-
-<Check>
-Verify applications can be deployed and accessed through the configured ports.
-</Check>
+<Step title="Manually Configure Network Interface">
+Return to the **Network** settings page and manually configure the RM-01 network interface:
+- **IP Address**: `10.10.99.100`
+- **Subnet Mask**: `255.255.255.0`
+- **Router**: `10.10.99.100` (i.e., the host's own IP)
 </Step>
 </Steps>
 
-## Security Considerations
+<Note>
+This configuration sets the host as a gateway, providing NAT network access for RM-01. The default gateway and DNS for RM-01 are automatically assigned by the host via DHCP. Manually setting the IP ensures that it remains within the `10.10.99.0/24` subnet, consistent with the device's internal service communication.
+</Note>
+
+## System Architecture
+
+### About the CFexpress Type-B Storage Card
+
+The **CFexpress Type-B** storage card is one of the core components of the RM-01 device, responsible for system boot, deployment of the inference framework, and key functions such as ISV/SV software distribution and authorization authentication.
+
+The storage card is divided into three independent partitions:
+
+<CardGroup cols={3}>
+<Card title="rm01sys" icon="hard-drive">
+**System Partition**
+
+The operating system and core runtime environment of the Inference Module are installed in this partition.
 
 <Warning>
-**Important Security Notes:**
-- All imported applications and scripts are stored in non-encrypted format
-- The auto-launch script is user-editable and unencrypted
-- Ensure proper access controls are in place for sensitive operations
-- Regularly update and monitor all system components
+Users or developers are strictly prohibited from accessing, modifying, or deleting the contents of this partition. Any unauthorized changes may cause the Inference Module to fail to boot or render inference functions inoperable.
+</Warning>
+</Card>
+
+<Card title="rm01app" icon="cube">
+**Application Partition**
+
+Used to temporarily store Docker image files submitted by users or developers. After writing, the system will automatically migrate to the built-in NVMe SSD and complete containerized deployment.
+
+<Warning>
+Do not directly run or modify application files in this partition.
+</Warning>
+</Card>
+
+<Card title="rm01models" icon="database">
+**Model Partition**
+
+Dedicated to storing large-scale AI models (e.g., LLMs, multimodal models, etc.) loaded by users or developers.
+
+<Info>
+For details on model formats, size limitations, loading procedures, and compatibility requirements, refer to the "Model Deployment" section below.
+</Info>
+</Card>
+</CardGroup>
+
+### About the Application Module
+
+<Info>
+**Network Configuration**
+- IP Address: `10.10.99.99`
+- Port Range: `59000-59299`
+</Info>
+
+#### Application Module Hardware Specifications
+
+```text
+Processor: Intel Core i3-N305 (8 cores, 8 threads, base frequency 1.8 GHz, max turbo frequency 3.8 GHz)
+Memory: 16 GB / 24 GB LPDDR5-4800MT/s (onboard, non-expandable)
+Storage: 512 GB / 1 TB / 2 TB (optional) NVMe SSD
+```
+
+#### Application Module SSH Access Credentials
+
+<CodeGroup>
+```bash SSH Login Command
+ssh rm01@10.10.99.99
+# Default Username: rm01
+# Default Password: rm01 (factory preset, for initial login only)
+```
+
+```bash Change Password
+# Execute immediately after first login
+passwd
+```
+</CodeGroup>
+
+<Warning>
+**Security Notice**
+
+To ensure system security, immediately use the `passwd` command to change the default password after the first SSH login. The default password is only for initial configuration and must not be used in production or deployment environments.
 </Warning>
 
-## Troubleshooting
+### About the Inference Module
+
+<Info>
+**Network Configuration**
+- IP Address: `10.10.99.98`
+- Service Port Range: `58000–58999`
+</Info>
+
+The **Inference Module** is the core computing unit of RM-01, supporting various high-performance AI inference configurations. Users can select the appropriate model based on model scale and performance requirements.
+
+#### Hardware Configuration Options
+
+| Memory | Memory Bandwidth | Compute Power        | Tensor Core Count |
+|--------|------------------|:--------------------|:------------------|
+| 32 GB  | 204.8 GB/s       | 200 TOPS (INT8)     | 56                |
+| 64 GB  | 204.8 GB/s       | 275 TOPS (INT8)     | 64                |
+| 64 GB  | 273 GB/s         | 1,200 TFLOPS (FP4)  | 64                |
+| 128 GB | 273 GB/s         | 2,070 TFLOPS (FP4)  | 96                |
+
+#### Pre-installed Inference Frameworks
+
+RM-01 comes pre-installed with the following two inference frameworks on the **CFexpress Type-B** storage card, both running on the Inference Module:
+
+<Tabs>
+<Tab title="vLLM">
+- **Status**: Automatically starts
+- **Default Port**: 58000
+- **Function**: Provides OpenAI-compatible API interfaces
+- **Supported Requests**: Standard POST `/v1/chat/completions` etc.
+</Tab>
+
+<Tab title="TEI (Text Embedding Inference)">
+- **Status**: Requires manual startup
+- **Function**: Text embedding services
+</Tab>
+</Tabs>
+
+#### API Access Method
+
+After successfully loading a model, the **vLLM** inference service can be accessed via the following address:
+
+```bash
+http://10.10.99.98:58000/v1/chat/completions
+```
+
+<Tip>
+Supports direct calls using standard OpenAI clients (e.g., openai-python, curl, Postman).
+</Tip>
+
+<Warning>
+**Security Notice**
+
+To ensure system security and stability, the Inference Module does not provide SSH access permissions. Users and developers cannot directly log in or interactively operate the underlying operating system of this module.
+
+Any attempts to bypass security policies or directly access the Inference Module may result in system anomalies, data corruption, or service interruptions, which are not covered by warranty services.
+</Warning>
+
+## Model Deployment
+
+### About Models
+
+RM-01 supports inference for various AI models, including but not limited to:
+
+<CardGroup cols={5}>
+<Card title="LLM" icon="comments">
+Large Language Models
+</Card>
+<Card title="MLM" icon="images">
+Multimodal Models
+</Card>
+<Card title="VLM" icon="eye">
+Vision-Language Models
+</Card>
+<Card title="Embedding" icon="vector-square">
+Text Embedding Models
+</Card>
+<Card title="Reranker" icon="ranking-star">
+Reranker Models
+</Card>
+</CardGroup>
+
+<Info>
+All model files must be stored on the device's built-in **CFexpress Type-B** storage card, and users need to use a compatible **CFexpress Type-B** card reader to upload, manage, and update models on the host side.
+</Info>
+
+When the **CFexpress Type-B** storage card is connected to RM-01, the system mounts it as a read-only data volume named `models` at the path `/home/rm01/models`. Its standard file structure is as follows:
+
+```bash
+models/
+├── auto/                  # Directory for automatic model loading (production-grade deployment)
+│   ├── embedding/         # Embedding models (not automatically loaded, see below)
+│   ├── llm/               # Large language models (weight files stored directly, see below)
+│   └── reranker/          # Reranker models (not automatically loaded, see below)
+└── dev/                   # Developer-defined model directory (higher priority)
+    ├── embedding/
+    ├── llm/
+    └── reranker/
+```
+
+<Note>
+- The `auto/` directory is used for **lightweight, standardized model deployment**, automatically recognized by the system
+- The `dev/` directory is used for **fine-grained control of model behavior by developers**, with higher priority than `auto/`. The system will ignore models in `auto/` if `dev/` is used
+</Note>
+
+### Deployment Mode Selection
+
+<Tabs>
+<Tab title="Automatic Mode (auto)">
+
+Simplified mode suitable for quick verification and standardized deployment.
 
 <AccordionGroup>
-<Accordion icon="ethernet" title="Port Connection Issues">
-**Common Problems:**
-- Firewall blocking configured ports
-- Network connectivity issues between units
-- Port conflicts with existing services
+<Accordion icon="file-import" title="Usage">
+Place the **complete weight files** of the model (e.g., `.safetensors`, `.bin`, `.pt`, `.awq`, etc.) **directly in the `auto/llm/` directory**, **without nesting in subfolders**.
 
-**Solutions:**
-- Check firewall rules for the required port ranges
-- Verify network connectivity using ping tests
-- Use `netstat` to identify port conflicts
+<CodeGroup>
+```text ❌ Incorrect Example
+auto/llm/Qwen3-30B-A3B-Instruct-2507-AWQ/model.safetensors
+```
+
+```text ✅ Correct Example
+auto/llm/model-001-of-006.safetensors
+auto/llm/config.json
+auto/llm/tokenizer.json
+auto/llm/vocab.json
+```
+</CodeGroup>
 </Accordion>
 
-<Accordion icon="brain" title="Model Loading Failures">
-**Common Problems:**
-- Incorrect model directory paths
-- Insufficient permissions for model files
-- Auto-launch script configuration errors
-
-**Solutions:**
-- Verify model files are in the correct directories
-- Check file permissions with `ls -la`
-- Test auto-launch script manually
-</Accordion>
-
-<Accordion icon="docker" title="Application Deployment Issues">
-**Common Problems:**
-- Application storage path configuration
-- NVMe SSD access issues
-- Port assignment conflicts
-
-**Solutions:**
-- Verify storage paths exist and are accessible
-- Check NVMe SSD mount status
-- Review port assignments for conflicts
+<Accordion icon="gear" title="System Behavior">
+- Upon device startup, the system scans the `auto/llm/` directory and automatically loads models in compatible formats
+- **Automatic loading is not supported for embedding or reranker models**, only LLMs
+- After loading, the model enables **basic inference capabilities by default** and **does not enable the following advanced features**:
+  - Speculative Decoding
+  - Prefix Caching
+  - Chunked Prefill
+  - The maximum context length (`max_model_len`) is restricted to the system's safe threshold (typically ≤ 8192 tokens)
+- **Limited performance optimization**: To ensure system stability and multitasking concurrency, models in automatic mode use a conservative memory allocation strategy (`gpu_memory_utilization` ≤ 0.8)
 </Accordion>
 </AccordionGroup>
 
-## Next Steps
+<Warning>
+**Important Note**
 
-After completing the system setup:
+Automatic mode is suitable for **quickly verifying model compatibility** or **standardized deployment scenarios**, but it is **not suitable for high-performance inference in production environments**. For full performance, use **manual mode (dev)**.
+</Warning>
 
-1. **Deploy Your First Model**: Upload a model to the Computing Unit and test inference
-2. **Configure Applications**: Set up your first application on the Application Unit
-3. **Monitor System Health**: Use the Hardware Control Unit to monitor system performance
-4. **Customize Display**: Configure matrix display settings for your environment
+</Tab>
+
+<Tab title="Manual Mode (dev)">
+
+Developer mode, providing complete configuration control and performance optimization capabilities.
+
+<Info>
+**Manual mode has higher priority than automatic mode**. When any `.yaml` configuration file exists in the `embedding`, `llm`, or `reranker` directories under `dev/`, the system will **completely ignore all models in `auto/`**.
+</Info>
+
+#### Configuration File Structure
+
+The `embedding`, `llm`, and `reranker` directories under `dev/` must contain the following three YAML configuration files to start the corresponding model services:
+
+| File Name            | Purpose                              |
+|----------------------|--------------------------------------|
+| `embedding_run.yaml` | Start text embedding model service   |
+| `llm_run.yaml`       | Start large language model service    |
+| `reranker_run.yaml`  | Start reranker model service          |
 
 <Note>
-For additional technical support or advanced configuration guidance, contact your system administrator or refer to the detailed API documentation.
+All files must be located in the corresponding folders under `dev/`, and **file names must match exactly**, case-sensitive.
 </Note>
+
+#### Example Configuration File
+
+```yaml llm_run.yaml
+model: /home/rm01/models/dev/llm/Qwen3-30B-A3B-Instruct-2507-AWQ
+port: 58000
+gpu_memory_utilization: 0.85
+max_model_len: 24576
+served_model_name: RM-01 LLM
+enable_prefix_caching: true
+enable_chunked_prefill: true
+max_num_batched_tokens: 512
+block_size: 16
+tensor_parallel_size: 1
+dtype: auto
+```
+
+<Tip>
+**Configuration Notes**
+- The `model` path must be an **absolute path** pointing to the model file directory (not a compressed file)
+- The `port` must be within the `58000–58999` range and must not conflict with other services
+- The `gpu_memory_utilization` is recommended to be set between 0.7–0.9 to maximize throughput
+- All parameters follow the [vLLM official documentation](https://docs.vllm.ai/en/latest/index.html)
+</Tip>
+
+#### Deployment Steps
+
+<Steps>
+<Step title="Copy Model Files">
+Copy the model files (complete directory) to `dev/llm/` (or `embedding/`, `reranker/`)
+</Step>
+
+<Step title="Create Configuration File">
+Create and place the corresponding `.yaml` configuration file
+</Step>
+
+<Step title="Insert Storage Card and Restart">
+Insert the **CFexpress Type-B** storage card and restart RM-01
+</Step>
+
+<Step title="Automatic System Loading">
+The system will automatically load the configuration in `dev/` and start the corresponding service
+</Step>
+
+<Step title="Access Service">
+Once the service is started, it can be accessed via interfaces like `http://10.10.99.98:58000/v1/chat/completions`
+</Step>
+</Steps>
+
+<Tip>
+**Recommendation**: For initial deployment, use the `--load-format auto` and `--dtype auto` options provided by vLLM to automatically adapt to the model format.
+</Tip>
+
+</Tab>
+</Tabs>
+
+### Security and Maintenance Notes
+
+<Warning>
+- **Prohibited SSH Login to Inference Module**: All model management must be done via the **CFexpress Type-B** storage card
+- **Model Files Must Be Raw Weights**: Do not use compressed files (.zip/.tar.gz), encrypted packages, or non-standard formats
+- **File Permissions**: All model files must be readable (`chmod 644`), and directories must be executable (`chmod 755`)
+</Warning>
+
+<Tip>
+- **Version Control**: It is recommended to use Git or file naming conventions (e.g., `Qwen3-30B-A3B-Instruct-v1.2-20250930`) to manage model versions
+- **Backup Recommendation**: Back up the `dev/` and `auto/` directories before updating models to avoid configuration loss
+</Tip>
+
+### Mode Selection Recommendations
+
+| Scenario                        | Recommended Mode                     | Description |
+|--------------------------------|--------------------------------------|-------------|
+| Quickly verify model compatibility | Automatic Mode (auto)               | No configuration required, plug and play |
+| High-performance inference in production | Manual Mode (dev) + fine-tuned configuration | Full performance optimization |
+| Multi-model parallel deployment | Manual Mode (dev) + multiple `.yaml` files | Flexible service orchestration |
+| Development debugging, prototype validation | Manual Mode (dev)                  | Complete control |
+
+## Technical Support
+
+<CardGroup cols={2}>
+<Card title="Developer Documentation" icon="book-open" href="https://docs.rminte.com">
+    Complete API reference and technical documentation
+</Card>
+<Card title="GitHub Repository" icon="github" href="https://github.com/rminte">
+    Sample code and open-source tools
+</Card>
+<Card title="Technical Forum" icon="comments" href="https://forum.rminte.com">
+    Developer community and technical discussions
+</Card>
+<Card title="Technical Support" icon="headset" href="mailto:support@rminte.com">
+    Professional technical support services
+</Card>
+</CardGroup>
 
 ---
 
