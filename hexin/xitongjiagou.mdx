@@ -1,10 +1,24 @@
 ---
 title: "RM-01 开发者使用指南"
 description: "全面了解 RM-01 的系统架构、模块配置、网络设置及模型部署方法"
-icon: "sitemap"
+icon: "code"
 ---
 
-# RM-01 开发者使用指南
+## 概述
+
+本指南为开发者提供 RM-01 便携式超级计算机的完整技术文档，涵盖系统架构、网络配置、模型部署等核心内容：
+
+<CardGroup cols={3}>
+<Card title="系统架构" icon="microchip" href="#关于-cfexpress-type-b-存储卡">
+    了解推理模组、应用模组和管理芯片的协同工作机制
+</Card>
+<Card title="网络配置" icon="network-wired" href="#如何通过主机为-rm-01-提供互联网访问以-macos-为例">
+    配置网络连接，实现设备与主机的数据交互
+</Card>
+<Card title="模型部署" icon="brain" href="#关于模型">
+    掌握 AI 模型的部署、配置和优化方法
+</Card>
+</CardGroup>
 
 <Warning>
 **使用前必读**
@@ -16,7 +30,9 @@ RM-01 由一个**推理模组**、一个**应用模组**和一颗**加密与管�
 设备上电启动并经 **USB Type-C** 接口连接主机后，系统将自动配置本地网络子网，**用户主机**将被分配静态 IP 地址 `10.10.99.100`。**推理模组**（IP: `10.10.99.98`）和**应用模组**（IP: `10.10.99.99`）——均部署独立的 SSH 服务，支持用户通过标准 SSH 客户端（如 OpenSSH、PuTTY）直接访问，而管理模组则需通过串口工具访问。
 </Info>
 
-## 如何通过主机为 RM-01 提供互联网访问（以 macOS 为例）
+## 网络配置
+
+### 如何通过主机为 RM-01 提供互联网访问（以 macOS 为例）
 
 在通过 USB Type-C 连接**用户主机**后，RM-01 将在网络接口列表中显示为：
 - **`AX88179A`**（开发者版本）
@@ -57,31 +73,39 @@ RM-01 由一个**推理模组**、一个**应用模组**和一颗**加密与管�
 此配置将主机作为网关，为 RM-01 提供 NAT 网络访问。RM-01 的默认网关和 DNS 均由主机通过 DHCP 服务自动分配，手动设置 IP 可确保其始终位于 `10.10.99.0/24` 子网内，与设备内部服务通信一致。
 </Note>
 
-## 关于 CFexpress Type-B 存储卡
+## 系统架构
+
+### 关于 CFexpress Type-B 存储卡
 
 **CFexpress Type-B** 存储卡是 RM-01 设备的核心组件之一，承担系统引导、模型推理框架部署及 ISV/SV 软件分发与授权认证的关键功能。
 
 该存储卡划分为三个独立分区：
 
 <CardGroup cols={3}>
-<Card title="rm01sys - 系统分区">
-**推理模组**的操作系统与核心运行环境安装于该分区。
+<Card title="rm01sys" icon="hard-drive">
+**系统分区**
+
+推理模组的操作系统与核心运行环境安装于该分区。
 
 <Warning>
-严禁用户或开发者访问、修改或删除该分区内容。任何未经授权的更改均可能导致推理模组无法启动或推理功能失效，且由此造成的硬件或软件损坏不在任何保修服务范围内。
+严禁用户或开发者访问、修改或删除该分区内容。任何未经授权的更改均可能导致推理模组无法启动或推理功能失效。
 </Warning>
 </Card>
 
-<Card title="rm01app - 应用分区">
-该分区用于暂存用户或开发者提交的 `Docker` 镜像文件。当镜像被写入 `rm01app` 后，RM-01 系统将自动将其迁移至主机内置的 **NVMe SSD** 存储中，并完成容器化部署。
+<Card title="rm01app" icon="cube">
+**应用分区**
+
+用于暂存用户或开发者提交的 Docker 镜像文件。镜像写入后，系统将自动迁移至内置 NVMe SSD 并完成容器化部署。
 
 <Tip>
 请勿直接在该分区中运行或修改应用文件。
 </Tip>
 </Card>
 
-<Card title="rm01models - 模型分区">
-该分区专用于存储用户或开发者加载的大规模人工智能模型（如 LLM、多模态模型等）。
+<Card title="rm01models" icon="database">
+**模型分区**
+
+专用于存储大规模人工智能模型（如 LLM、多模态模型等）。
 
 <Info>
 关于模型格式、大小限制、加载流程及兼容性要求，请参阅下文"关于模型"章节。
@@ -89,7 +113,7 @@ RM-01 由一个**推理模组**、一个**应用模组**和一颗**加密与管�
 </Card>
 </CardGroup>
 
-## 关于应用模组
+### 关于应用模组
 
 <Info>
 **网络配置**
@@ -97,7 +121,7 @@ RM-01 由一个**推理模组**、一个**应用模组**和一颗**加密与管�
 - 端口范围: `59000-59299`
 </Info>
 
-### 应用模组硬件规格
+#### 应用模组硬件规格
 
 ```text
 处理器：Intel Core i3-N305（8 核 8 线程，基础频率 1.8 GHz，最大睿频 3.8 GHz）
@@ -105,7 +129,7 @@ RM-01 由一个**推理模组**、一个**应用模组**和一颗**加密与管�
 存储：512 GB / 1 TB / 2 TB (可选) NVMe SSD
 ```
 
-### 应用模组 SSH 访问凭证
+#### 应用模组 SSH 访问凭证
 
 <CodeGroup>
 ```bash SSH 登录命令
@@ -126,7 +150,7 @@ passwd
 为保障系统安全，首次通过 SSH 登录后，请立即使用 `passwd` 命令修改默认密码；默认密码仅用于初始配置，严禁在生产及交付环境中使用。
 </Warning>
 
-## 关于推理模组
+### 关于推理模组
 
 <Info>
 **网络配置**
@@ -136,7 +160,7 @@ passwd
 
 **推理模组**是 RM-01 的核心计算单元，支持多种高性能 AI 推理配置，用户可根据模型规模与性能需求选择对应型号。
 
-### 硬件配置选项
+#### 硬件配置选项
 
 | 显存   | 显存带宽   | 算力                | Tensor Core 数量 |
 |--------|------------|:--------------------|:-----------------|
@@ -145,7 +169,7 @@ passwd
 | 64 GB  | 273 GB/s   | 1,200 TFLOPS  (FP4) | 64               |
 | 128 GB | 273 GB/s   | 2,070 TFLOPS  (FP4) | 96               |
 
-### 预装推理框架
+#### 预装推理框架
 
 RM-01 出厂时，**CFexpress Type-B** 存储卡中预装以下两个推理框架，均运行于推理模组：
 
@@ -163,7 +187,7 @@ RM-01 出厂时，**CFexpress Type-B** 存储卡中预装以下两个推理框�
 </Tab>
 </Tabs>
 
-### API 访问方式
+#### API 访问方式
 
 成功加载模型后，可通过以下地址访问 **vLLM** 推理服务：
 
@@ -183,14 +207,29 @@ http://10.10.99.98:58000/v1/chat/completions
 任何试图绕过安全策略、直接访问推理模组的操作，均可能导致系统异常、数据损坏或服务中断，且不在保修服务范围内。
 </Warning>
 
-## 关于模型
+## 模型部署
+
+### 关于模型
 
 RM-01 支持推理多种人工智能模型，包括但不限于：
-- **大语言模型（LLM）**
-- **多模态模型（MLM）**
-- **视觉语言模型（VLM）**
-- **文本嵌入模型（Embedding）**
-- **重排序模型（Reranker）**
+
+<CardGroup cols={5}>
+<Card title="LLM" icon="comments">
+大语言模型
+</Card>
+<Card title="MLM" icon="images">
+多模态模型
+</Card>
+<Card title="VLM" icon="eye">
+视觉语言模型
+</Card>
+<Card title="Embedding" icon="vector-square">
+文本嵌入模型
+</Card>
+<Card title="Reranker" icon="ranking-star">
+重排序模型
+</Card>
+</CardGroup>
 
 <Info>
 所有模型文件均需存储于设备内置的 **CFexpress Type-B** 存储卡中，用户需使用兼容的 **CFexpress Type-B** 读卡器在主机端进行模型的上传、管理与更新。
@@ -215,10 +254,15 @@ models/
 - `dev/` 目录用于**开发者精细控制模型行为**，优先级高于 `auto/`，系统将忽略 `auto/` 中的模型
 </Note>
 
-### 1. 自动模式（auto）
+### 部署模式选择
+
+<Tabs>
+<Tab title="自动模式（auto）">
+
+适用于快速验证和标准化部署的简化模式。
 
 <AccordionGroup>
-<Accordion title="使用方式">
+<Accordion icon="file-import" title="使用方式">
 将模型的**完整权重文件**（如 `.safetensors`、`.bin`、`.pt`、`.awq` 等）**直接放置于 `auto/llm/` 目录下**，**禁止使用子文件夹嵌套**。
 
 <CodeGroup>
@@ -235,7 +279,7 @@ auto/llm/vocab.json
 </CodeGroup>
 </Accordion>
 
-<Accordion title="系统行为">
+<Accordion icon="gear" title="系统行为">
 - 设备开机后，系统将扫描 `auto/llm/` 目录，自动加载符合兼容格式的模型
 - **不支持嵌入模型（embedding）与重排序模型（reranker）的自动加载**，仅支持 LLM
 - 模型加载后，**默认启用基础推理能力**，**不开启以下高级功能**：
@@ -253,7 +297,11 @@ auto/llm/vocab.json
 自动模式适用于**快速验证模型兼容性**或**标准化部署场景**，**不适用于生产级高性能推理**。如需完整性能，请使用**手动模式（dev）**。
 </Warning>
 
-### 2. 手动模式（dev）—— 开发者模式
+</Tab>
+
+<Tab title="手动模式（dev）">
+
+开发者模式，提供完整的配置控制和性能优化能力。
 
 <Info>
 **手动模式优先级高于自动模式**。当 `dev/` 的 `embedding`、`llm`、`reranker` 三个目录下存在任意 `.yaml` 配置文件时，系统将**完全忽略 `auto/` 中的所有模型**。
@@ -273,7 +321,7 @@ auto/llm/vocab.json
 所有文件必须位于 `dev/` 目录下相对应的文件夹内，**文件名必须完全匹配**，大小写敏感。
 </Note>
 
-#### 示例配置文件（`llm_run.yaml`）
+#### 示例配置文件
 
 ```yaml llm_run.yaml
 model: /home/rm01/models/dev/llm/Qwen3-30B-A3B-Instruct-2507-AWQ
@@ -294,10 +342,10 @@ dtype: auto
 - `model` 路径必须为**绝对路径**，指向模型文件所在目录（非压缩包）
 - `port` 必须位于 `58000–58999` 范围内，且不可与其他服务冲突
 - `gpu_memory_utilization` 建议设置为 0.7–0.9，以最大化吞吐量
-- 所有参数均遵循 [vLLM 官方文档规范](https://docs.vllm.ai/en/latest/index.html)，请确保配置项兼容 **CFexpress Type-B** 存储卡内目前使用的 vLLM 版本
+- 所有参数均遵循 [vLLM 官方文档规范](https://docs.vllm.ai/en/latest/index.html)
 </Tip>
 
-#### 启动流程
+#### 部署步骤
 
 <Steps>
 <Step title="复制模型文件">
@@ -325,6 +373,9 @@ dtype: auto
 **建议**：首次部署时，建议使用 `vLLM` 官方提供的 `--load-format auto` 和 `--dtype auto`，以自动适配模型格式。
 </Tip>
 
+</Tab>
+</Tabs>
+
 ### 安全与维护须知
 
 <Warning>
@@ -340,12 +391,29 @@ dtype: auto
 
 ### 模式选择建议
 
-| 场景 | 推荐模式 |
-|------|----------|
-| 快速验证模型是否兼容 | 自动模式（auto） |
-| 生产环境高性能推理 | 手动模式（dev） + 精细配置 |
-| 多模型并行部署 | 手动模式（dev） + 多个 `.yaml` 文件 |
-| 开发调试、原型验证 | 手动模式（dev） |
+| 场景 | 推荐模式 | 说明 |
+|------|----------|------|
+| 快速验证模型是否兼容 | 自动模式（auto） | 无需配置，即插即用 |
+| 生产环境高性能推理 | 手动模式（dev） + 精细配置 | 完整性能优化 |
+| 多模型并行部署 | 手动模式（dev） + 多个 `.yaml` 文件 | 灵活的服务编排 |
+| 开发调试、原型验证 | 手动模式（dev） | 完全控制权 |
+
+## 技术支持
+
+<CardGroup cols={2}>
+<Card title="开发者文档" icon="book-open" href="https://docs.rminte.com">
+    完整的 API 参考和技术文档
+</Card>
+<Card title="GitHub 仓库" icon="github" href="https://github.com/rminte">
+    示例代码和开源工具
+</Card>
+<Card title="技术论坛" icon="comments" href="https://forum.rminte.com">
+    开发者社区和技术讨论
+</Card>
+<Card title="技术支持" icon="headset" href="mailto:support@rminte.com">
+    专业技术支持服务
+</Card>
+</CardGroup>
 
 ---
 
