@@ -45,15 +45,15 @@
             "group": "入门",
             "pages": [
               "index_cn",
-              "jishucanshu"
+              "specifications_cn"
             ]
           },
           {
             "group": "核心",
             "pages": [
-              "hexin/kuaisurumen",
-              "hexin/qiyebushu",
-              "hexin/xitongjiagou"
+              "essentials_cn/quickstart_cn",
+              "essentials_cn/deploy_cn",
+              "essentials_cn/develop_cn"
             ]
           }
         ]
