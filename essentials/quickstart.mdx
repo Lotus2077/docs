@@ -8,12 +8,40 @@ icon: "play"
 
 The RM-01 AI supercomputer is a portable AI solution that combines high performance, security, and ease of use, specifically designed for enterprise-level AI applications. It operates offline with local computation, significantly reducing data security risks and operational costs.
 
+### System Architecture
+
+RM-01 consists of three core modules interconnected through a built-in Ethernet switch chip, forming an independent internal network:
+
+<CardGroup cols={3}>
+<Card title="Inference Module" icon="brain">
+**IP Address**: `10.10.99.98`
+
+Handles AI model inference computation, providing high-performance computing power
+</Card>
+
+<Card title="Application Module" icon="cube">
+**IP Address**: `10.10.99.99`
+
+Runs pre-installed applications and business systems, such as Open WebUI
+</Card>
+
+<Card title="Management Module" icon="gauge">
+**IP Address**: `10.10.99.97`
+
+Provides RobOS real-time monitoring and device management functions
+</Card>
+</CardGroup>
+
+<Info>
+When you connect RM-01 to your host device (computer, phone, or tablet) via USB Type-C, the host will automatically be assigned the static IP address `10.10.99.100` and join RM-01's internal network.
+</Info>
+
 ### Key Features
 
 <CardGroup cols={3}>
 <Card title="Powerful Performance" icon="microchip">
 - Supports 300+ mainstream open-source models
-- Up to 800 TOPS computing power
+- Up to 2070 TFLOPS computing power
 - 128GB LPDDR5 high-speed memory
 </Card>
 
@@ -26,7 +54,7 @@ The RM-01 AI supercomputer is a portable AI solution that combines high performa
 <Card title="Simple Deployment" icon="bolt">
 - Deployment setup completed within 5 minutes
 - Plug-and-play, no professional IT support needed
-- Maximum power consumption only 100W (TDP 60W)
+- Maximum power consumption only 140W (TDP 60W)
 </Card>
 </CardGroup>
 
@@ -39,14 +67,14 @@ The RM-01 AI supercomputer is a portable AI solution that combines high performa
 </Accordion>
 
 <Accordion title="Top Interfaces">
-- **CFexpress Slot**: For model storage, supports hot-swapping
-- **MicroSD Slot**: For application and data storage
-- **Ext. Port**: For connecting external expansion devices
+- **CFexpress Slot**: For model and application storage, supports hot-swapping
+- **MicroSD Slot**: For logo customization and key storage
+- **Expansion Port**: For connecting external expansion devices (supports multimodal input)
 </Accordion>
 
 <Accordion title="Side Interfaces">
 - **USB-C Power Port**: Connect to power adapter (supports PD3.1)
-- **USB-C Network Port**: Connect to enterprise network or devices
+- **USB-C Network Port**: Connect to personal devices or enterprise switches
 - **Ventilation**: Ensure good ventilation, do not block
 </Accordion>
 </AccordionGroup>
@@ -79,36 +107,122 @@ Confirm the package contains the following items:
 </Step>
 
 <Step title="Device Connection">
-Use the USB-C to network adapter to connect to a local network or personal device (such as a phone, tablet, computer, etc.)
+Use a USB Type-C cable to connect RM-01 to your host device (computer, phone, or tablet). After the device is powered on, it will automatically configure the internal network, and your host will be assigned the static IP address: `10.10.99.100`
+
+<Check>
+After successful connection, your host's network interface will display as **AX88179A** or **RMinte RM-01** (depending on version)
+</Check>
+</Step>
+
+<Step title="Configure Internet Sharing (Optional)">
+If you need RM-01 to access the internet, you can share the network through your host device. For macOS example:
+
+1. Open **System Settings** > **Network** > **Sharing**
+2. Enable **Internet Sharing**, select **Wi-Fi** as the sharing source
+3. In "Share to devices", check the RM-01 network interface
+4. Manually set the RM-01 network interface parameters:
+   - **IP Address**: `10.10.99.100`
+   - **Subnet Mask**: `255.255.255.0`
+   - **Router**: `10.10.99.100`
+5. Click **Done**
+
+<Tip>
+This configuration makes the host act as a gateway, and RM-01 will automatically obtain the default gateway and DNS. If internet access is not needed, you can skip this step.
+</Tip>
 </Step>
 </Steps>
 
 ### Accessing the Management Interface
 
+RM-01 provides multiple management entry points, each corresponding to different functional modules:
+
 <Tabs>
-<Tab title="Web Interface">
-1. Open a browser on a computer in the same local network
-2. Enter the device IP address or hostname (format: `http://Assigned-IP-Address:xxxx`, where xxxx is the last four digits of the device serial number)
-3. Log in using the default credentials:
-   - Username: `admin`
-   - Password: scan the corresponding QR code on the Warranty Card
+<Tab title="RobOS Monitoring Dashboard">
+Access the real-time monitoring dashboard of the management module:
+
+```
+http://10.10.99.97
+```
+
+View the connection status and operation of each RM-01 module here, keeping track of device health in real-time.
 </Tab>
 
-<Tab title="Mobile App">
-1. Download and install the "RM-01 ALTAI Companion" app
-2. Open the app and scan the QR code on the device
-3. Follow the in-app prompts to complete the connection
+<Tab title="Open WebUI Debugging">
+Access the pre-installed Open WebUI on the application module:
+
+```
+http://10.10.99.99
+```
+
+**Default login credentials**:
+- Username: `rm01`
+- Password: `rm01`
+
+<Warning>
+After first login, please use SSH to log in (address: `10.10.99.99`) and immediately change the password to ensure security.
+</Warning>
+</Tab>
+
+<Tab title="Inference Service Endpoint">
+Directly access the API service of the inference module:
+
+```
+http://10.10.99.98:58000/v1/chat/completions
+```
+
+Supports standard OpenAI client calls, using tools like `openai-python`, Postman, or curl.
 </Tab>
 </Tabs>
 
+<Info>
+If you have purchased or deployed other enterprise applications, they typically run on the application module (`10.10.99.99`). Please contact your service provider for specific port numbers and access methods.
+</Info>
+
+## Model Management
+
+### Loading Open-Source Models (Automatic Mode)
+
+RM-01 supports quick loading of open-source large language models (LLM), allowing you to easily verify model compatibility.
+
+<Steps>
+<Step title="Prepare Model Files">
+Using a **CFexpress Type-B** card reader, place the complete model weight files into the `auto/llm/` directory of the storage card.
+
+Supported formats include: `.safetensors`, `.bin`, `.pt`, `.awq`, etc.
+
+**Correct example**:
+```
+auto/llm/model-001-of-006.safetensors
+auto/llm/config.json
+auto/llm/tokenizer.json
+auto/llm/vocab.json
+```
+
 <Warning>
-After first login, immediately change the default administrator password:
-1. Log in to the management interface
-2. Click the "Settings" icon in the top right corner
-3. Select "Account Security"
-4. Click "Change Password"
-5. Enter and confirm the new password
+Do not use subfolders! Files must be placed directly in the `auto/llm/` directory, not in subdirectories.
+
+**Incorrect example**:
+```
+auto/llm/Qwen3-30B-A3B-Instruct-2507-AWQ/model.safetensors
+```
 </Warning>
+</Step>
+
+<Step title="Insert Storage Card and Start">
+Insert the **CFexpress Type-B** storage card into RM-01 and restart the device. The system will automatically scan the `auto/llm/` directory and load compatible models.
+
+<Check>
+After the model is loaded, you can access the inference service through the inference service endpoint (`http://10.10.99.98:58000/v1/chat/completions`).
+</Check>
+</Step>
+</Steps>
+
+<Note>
+**Automatic Mode Limitations**:
+- Only supports large language models (LLM), does not support embedding models or reranker models
+- Suitable for quick verification of model compatibility, performance is limited (maximum context length ≤ 8192 tokens, memory usage rate ≤ 0.8)
+- For higher performance or multi-model parallel deployment, please contact your service provider for **manual mode (dev)** technical support
+</Note>
 
 ## Using AI Applications
 
@@ -174,6 +288,29 @@ Dust and moisture-proof design, prevents physical disassembly
 Granular user permission management system
 </Card>
 </CardGroup>
+
+### Security Usage Notes
+
+<AccordionGroup>
+<Accordion title="Inference Module Access Restrictions">
+**The inference module does not support SSH login**. All model management must be completed through the **CFexpress Type-B** storage card. This design ensures the stability and security of the inference service.
+
+<Warning>
+Do not attempt to directly access the SSH service of the inference module (`10.10.99.98`). All model deployments should be performed through the storage card.
+</Warning>
+</Accordion>
+
+<Accordion title="Data Backup Recommendations">
+Before updating models or configurations, it is recommended to back up the `auto/` and `dev/` directories on the storage card to prevent configuration loss or the need to roll back to a previous version.
+</Accordion>
+
+<Accordion title="Password Security">
+- Change all default passwords immediately after first login
+- Use strong passwords (at least 12 characters, including uppercase and lowercase letters, numbers, and special characters)
+- Update passwords regularly (recommended every 90 days)
+- Do not use the same password across multiple systems
+</Accordion>
+</AccordionGroup>
 
 ## User Management
 
@@ -263,15 +400,33 @@ After logging into the management interface, check the system status information
 
 <Tabs>
 <Tab title="Model Updates">
-1. Contact your service provider for model updates
+Update models through the CFexpress Type-B storage card:
+
+1. Obtain new model files from your service provider
+2. Use a card reader to place the model files into the `auto/llm/` directory of the storage card
+3. Ensure the file structure is correct (refer to the Model Management section)
+4. Reinsert the storage card and restart the device
+
+<Tip>
+It is recommended to back up existing model files before updating
+</Tip>
 </Tab>
 
 <Tab title="Application Updates">
-1. Contact your service provider for application updates
+Contact your service provider for application update packages and specific update procedures.
+
+Typically requires:
+1. Log in to the application module (`10.10.99.99`)
+2. Upload the update package
+3. Complete the update process following the prompts
 </Tab>
 
 <Tab title="System Updates">
-1. Contact your service provider for system updates
+Contact your service provider for system update support.
+
+<Warning>
+System updates may require professional technical support. Do not attempt unauthorized system update operations on your own.
+</Warning>
 </Tab>
 </Tabs>
 
@@ -314,9 +469,13 @@ Select "Restart" in the management interface, or short press the power button an
 
 <Accordion title="Can't connect to network">
 **Possible causes and solutions**:
-- **Network adapter issue**: Check the USB-C network adapter connection
-- **Network settings error**: Check network configuration, especially IP address settings
-- **Firewall restrictions**: Confirm the enterprise firewall is not blocking the device connection
+- **Network adapter issue**: Check the USB-C network adapter connection, confirm the host recognizes the AX88179A or RMinte RM-01 network interface
+- **IP address configuration error**: Confirm the host IP address is `10.10.99.100` with subnet mask `255.255.255.0`
+- **Firewall restrictions**: Confirm the enterprise firewall is not blocking the following addresses:
+  - `10.10.99.97` (Management Module)
+  - `10.10.99.98` (Inference Module)
+  - `10.10.99.99` (Application Module)
+- **Network interface not enabled**: Confirm the RM-01 network interface is enabled in network settings
 </Accordion>
 
 <Accordion title="Poor performance">
@@ -325,6 +484,16 @@ Select "Restart" in the management interface, or short press the power button an
 - **Large model load**: Switch to a smaller model
 - **High temperature**: Ensure good device ventilation, avoid stacking
 - **Insufficient storage space**: Clear unnecessary data
+- **Automatic mode limitations**: If using automatic mode to load models, performance is limited to a maximum context of 8192 tokens. Contact your service provider to upgrade to manual mode for higher performance
+</Accordion>
+
+<Accordion title="Model loading failure">
+**Possible causes and solutions**:
+- **Incorrect file structure**: Ensure model files are placed directly in the `auto/llm/` directory, do not use subfolders
+- **Incompatible file format**: Check if supported formats are used (`.safetensors`, `.bin`, `.pt`, `.awq`, etc.)
+- **Missing required files**: Ensure complete model files are included, including `config.json`, `tokenizer.json`, and other configuration files
+- **Storage card not properly inserted**: Reinsert the CFexpress Type-B storage card and restart the device
+- **Storage card failure**: Try using another CFexpress Type-B storage card
 </Accordion>
 </AccordionGroup>
 
@@ -367,8 +536,19 @@ Community discussions and Q&A
 </CardGroup>
 
 <Check>
-Congratulations! You have completed the basic setup and usage overview of RM-01! Now you can start exploring the endless possibilities that AI technology brings to your enterprise. If you have any questions, please contact your service provider or visit our support center for assistance.
+Congratulations! You have completed the basic setup and usage overview of RM-01! Now you can:
+
+- Use RobOS at `http://10.10.99.97` to monitor device status
+- Access Open WebUI at `http://10.10.99.99` for model debugging
+- Load your own open-source models to the `auto/llm/` directory via CFexpress Type-B storage card
+- Use the inference service endpoint at `http://10.10.99.98:58000/v1/chat/completions` for AI inference
+
+Start exploring the endless possibilities that AI technology brings to your enterprise! If you have any questions, please contact your service provider or visit our support center for assistance.
 </Check>
+
+<Tip>
+For in-depth development or optimizing RM-01 performance, please refer to the RM-01 Developer Guide or contact your service provider for additional technical support.
+</Tip>
 
 ---
 
